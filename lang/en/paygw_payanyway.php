@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'paygw_paypal', language 'en'
+ * Strings for component 'paygw_payanyway', language 'en'
  *
- * @package    paygw_paypal
+ * @package    paygw_payanyway
  * @copyright  2019 Shamim Rezaie <shamim@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -25,21 +25,21 @@
 $string['amountmismatch'] = 'The amount you attempted to pay does not match the required fee. Your account has not been debited.';
 $string['authorising'] = 'Authorising the payment. Please wait...';
 $string['brandname'] = 'Brand name';
-$string['brandname_help'] = 'An optional label that overrides the business name for the PayPal account on the PayPal site.';
-$string['cannotfetchorderdatails'] = 'Could not fetch payment details from PayPal. Your account has not been debited.';
+$string['brandname_help'] = 'An optional label that overrides the business name for the payanyway account on the payanyway site.';
+$string['cannotfetchorderdatails'] = 'Could not fetch payment details from payanyway. Your account has not been debited.';
 $string['clientid'] = 'Client ID';
-$string['clientid_help'] = 'The client ID that PayPal generated for your application.';
+$string['clientid_help'] = 'The client ID that payanyway generated for your application.';
 $string['environment'] = 'Environment';
 $string['environment_help'] = 'You can set this to Sandbox if you are using sandbox accounts (for testing purpose only).';
-$string['gatewaydescription'] = 'PayPal is an authorised payment gateway provider for processing credit card transactions.';
-$string['gatewayname'] = 'PayPal';
+$string['gatewaydescription'] = 'payanyway is an authorised payment gateway provider for processing credit card transactions.';
+$string['gatewayname'] = 'payanyway';
 $string['internalerror'] = 'An internal error has occurred. Please contact us.';
 $string['live'] = 'Live';
-$string['paymentnotcleared'] = 'payment not cleared by PayPal.';
-$string['pluginname'] = 'PayPal';
-$string['pluginname_desc'] = 'The PayPal plugin allows you to receive payments via PayPal.';
-$string['privacy:metadata'] = 'The PayPal plugin does not store any personal data.';
+$string['paymentnotcleared'] = 'payment not cleared by payanyway.';
+$string['pluginname'] = 'payanyway';
+$string['pluginname_desc'] = 'The payanyway plugin allows you to receive payments via payanyway.';
+$string['privacy:metadata'] = 'The payanyway plugin does not store any personal data.';
 $string['repeatedorder'] = 'This order has already been processed earlier.';
 $string['sandbox'] = 'Sandbox';
 $string['secret'] = 'Secret';
-$string['secret_help'] = 'The secret that PayPal generated for your application.';
+$string['secret_help'] = 'The secret that payanyway generated for your application.';
