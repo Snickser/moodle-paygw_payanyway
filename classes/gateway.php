@@ -54,6 +54,31 @@ class gateway extends \core_payment\gateway {
         $mform->addElement('select', 'paymentserver', get_string('paymentserver', 'paygw_payanyway'), $options);
         $mform->setType('paymentserver', PARAM_TEXT);
 
+	$paymentsystems = array(
+			'payanyway_0_0' => get_string('payanyway', 'paygw_payanyway'),
+//			'moneta_0_1015' => get_string('moneta', 'paygw_payanyway'),
+			'plastic_0_card' => get_string('plastic', 'paygw_payanyway'),
+			'sbp_0_12299232' => get_string('sbp', 'paygw_payanyway'),
+//			'webmoney_0_1017' => get_string('webmoney', 'paygw_payanyway'),
+//			'yandex_0_1020' => get_string('yandex', 'paygw_payanyway'),
+//			'moneymail_0_1038' => get_string('moneymail', 'paygw_payanyway'),
+//			'wallet_0_310212' => get_string('wallet', 'paygw_payanyway'),
+//			'banktransfer_1_705000_75983431' => get_string('banktransfer', 'paygw_payanyway'),
+//			'ciberpay_1_489755_19357960' => get_string('ciberpay', 'paygw_payanyway'),
+//			'comepay_1_228820_47654606' => get_string('comepay', 'paygw_payanyway'),
+//			'contact_1_1028_26' => get_string('contact', 'paygw_payanyway'),
+//			'elecsnet_1_232821_10496472' => get_string('elecsnet', 'paygw_payanyway'),
+//			'euroset_1_248362_136' => get_string('euroset', 'paygw_payanyway'),
+//			'forward_1_83046_116' => get_string('forward', 'paygw_payanyway'),
+//			'gorod_1_426904_152' => get_string('gorod', 'paygw_payanyway'),
+//			'mcb_1_295339_143' => get_string('mcb', 'paygw_payanyway'),
+//			'novoplat_1_281129_80314912' => get_string('novoplat', 'paygw_payanyway'),
+//			'platika_1_226272_15662295' => get_string('platika', 'paygw_payanyway'),
+//			'post_1_1029_15' => get_string('post', 'paygw_payanyway'),
+		);
+        $mform->addElement('select', 'paymentsystem', get_string('paymentsystem', 'paygw_payanyway'), $paymentsystems);
+        $mform->setDefault('paymentsystem', get_string('paymentsystem', 'paygw_payanyway'));
+
         $mform->addElement('text', 'mntid', get_string('mntid', 'paygw_payanyway'));
         $mform->setType('mntid', PARAM_TEXT);
 

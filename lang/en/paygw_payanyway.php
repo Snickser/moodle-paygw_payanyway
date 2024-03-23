@@ -32,21 +32,45 @@ $string['mnttestmode'] = 'Test mode';
 $string['paymentserver'] = 'Payment server URL';
 
 
-$string['amountmismatch'] = 'The amount you attempted to pay does not match the required fee. Your account has not been debited.';
-$string['authorising'] = 'Authorising the payment. Please wait...';
-$string['brandname_help'] = 'An optional label that overrides the business name for the PayAnyWay account on the PayAnyWay site.';
-$string['cannotfetchorderdatails'] = 'Could not fetch payment details from PayAnyWay. Your account has not been debited.';
-$string['clientid'] = 'Client ID';
-$string['clientid_help'] = 'The client ID that PayAnyWay generated for your application.';
-$string['environment'] = 'Environment';
-$string['environment_help'] = 'You can set this to Sandbox if you are using sandbox accounts (for testing purpose only).';
+
+/* Payment systems */
+$string['paymentsystem'] = 'Payment system';
+$string['payanyway'] = 'PayAnyWay';
+$string['banktransfer'] = 'Bank transfer';
+$string['ciberpay'] = 'CiberPay';
+$string['comepay'] = 'Comepay';
+$string['contact'] = 'Contact';
+$string['elecsnet'] = 'Elecsnet';
+$string['euroset'] = 'Euroset, Svyaznoi';
+$string['forward'] = 'Forward Mobile';
+$string['gorod'] = 'Federal System GOROD';
+$string['mcb'] = 'MoscowCreditBank';
+$string['moneta'] = 'Moneta.ru';
+$string['moneymail'] = 'Money Mail';
+$string['novoplat'] = 'NovoPlat';
+$string['plastic'] = 'VISA, MasterCard, MIR';
+$string['platika'] = 'PLATiKA';
+$string['post'] = 'Russian Post Transfer';
+$string['wallet'] = 'Wallet One';
+$string['webmoney'] = 'WebMoney';
+$string['yandex'] = 'Yandex.Money';
+$string['additionalparameters'] = 'Additional parameters';
+$string['eurosetrapidaphone'] = 'Phone number';
+$string['moneymailemail'] = 'Email in Money Mail';
+$string['mailofrussiasenderindex'] = 'Sender ZIP';
+$string['mailofrussiasenderaddress'] = 'Sender address';
+$string['mailofrussiasendername'] = 'Sender name';
+$string['webmoneyaccountid'] = 'Payment method';
+$string['sbp'] = 'SBP';
+
+
+
+//$string['amountmismatch'] = 'The amount you attempted to pay does not match the required fee. Your account has not been debited.';
+//$string['authorising'] = 'Authorising the payment. Please wait...';
+//$string['cannotfetchorderdatails'] = 'Could not fetch payment details from PayAnyWay. Your account has not been debited.';
 $string['internalerror'] = 'An internal error has occurred. Please contact us.';
-$string['live'] = 'Live';
-$string['paymentnotcleared'] = 'payment not cleared by PayAnyWay.';
+//$string['live'] = 'Live';
+//$string['paymentnotcleared'] = 'payment not cleared by PayAnyWay.';
 $string['privacy:metadata'] = 'The PayAnyWay plugin does not store any personal data.';
-$string['repeatedorder'] = 'This order has already been processed earlier.';
-$string['sandbox'] = 'Sandbox';
-$string['secret'] = 'Secret';
-$string['secret_help'] = 'The secret that PayAnyWay generated for your application.';
-
-
+//$string['repeatedorder'] = 'This order has already been processed earlier.';
+//$string['sandbox'] = 'Sandbox';
