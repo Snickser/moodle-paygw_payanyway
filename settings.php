@@ -15,10 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Settings for the PayPal payment gateway
+ * Settings for the PayAnyWay payment gateway
  *
- * @package    paygw_paypal
- * @copyright  2019 Shamim Rezaie <shamim@moodle.com>
+ * @package    paygw_payanyway
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

@@ -17,8 +17,7 @@
 /**
  * Plugin version and other meta-data are defined here.
  *
- * @package     paygw_chargebee
- * @copyright   2022 Rajneel Totaram <rajneel.totaram@moodle.com>
+ * @package     paygw_payanyway
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
