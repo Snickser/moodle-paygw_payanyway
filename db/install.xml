@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="payment/gateway/payanyway/db" VERSION="20220307" COMMENT="XMLDB file for Moodle payment/gateway/payanyway"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="paygw_payanyway" COMMENT="List of successful payanyway transactions.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="paymentid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="id from payments table populated after this order is paid."/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="customerid" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="Customer id in payanyway."/>
+        <FIELD NAME="transactionid" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" COMMENT="Transaction id in payanyway."/>
+        <FIELD NAME="invoicenumber" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="amountpaid" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Amount paid, including tax"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
