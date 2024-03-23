@@ -22,24 +22,31 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['pluginname'] = 'PayAnyWay';
+$string['pluginname_desc'] = 'The PayAnyWay plugin allows you to receive payments via PayAnyWay.';
+$string['gatewaydescription'] = 'PayAnyWay is an authorised payment gateway provider for processing credit card transactions.';
+$string['gatewayname'] = 'PayAnyWay';
+$string['mntid'] = 'Account number';
+$string['mntdataintegritycode'] = 'Code of data integrity verification';
+$string['mnttestmode'] = 'Test mode';
+$string['paymentserver'] = 'Payment server URL';
+
+
 $string['amountmismatch'] = 'The amount you attempted to pay does not match the required fee. Your account has not been debited.';
 $string['authorising'] = 'Authorising the payment. Please wait...';
-$string['brandname'] = 'Brand name';
-$string['brandname_help'] = 'An optional label that overrides the business name for the payanyway account on the payanyway site.';
-$string['cannotfetchorderdatails'] = 'Could not fetch payment details from payanyway. Your account has not been debited.';
+$string['brandname_help'] = 'An optional label that overrides the business name for the PayAnyWay account on the PayAnyWay site.';
+$string['cannotfetchorderdatails'] = 'Could not fetch payment details from PayAnyWay. Your account has not been debited.';
 $string['clientid'] = 'Client ID';
-$string['clientid_help'] = 'The client ID that payanyway generated for your application.';
+$string['clientid_help'] = 'The client ID that PayAnyWay generated for your application.';
 $string['environment'] = 'Environment';
 $string['environment_help'] = 'You can set this to Sandbox if you are using sandbox accounts (for testing purpose only).';
-$string['gatewaydescription'] = 'payanyway is an authorised payment gateway provider for processing credit card transactions.';
-$string['gatewayname'] = 'payanyway';
 $string['internalerror'] = 'An internal error has occurred. Please contact us.';
 $string['live'] = 'Live';
-$string['paymentnotcleared'] = 'payment not cleared by payanyway.';
-$string['pluginname'] = 'payanyway';
-$string['pluginname_desc'] = 'The payanyway plugin allows you to receive payments via payanyway.';
-$string['privacy:metadata'] = 'The payanyway plugin does not store any personal data.';
+$string['paymentnotcleared'] = 'payment not cleared by PayAnyWay.';
+$string['privacy:metadata'] = 'The PayAnyWay plugin does not store any personal data.';
 $string['repeatedorder'] = 'This order has already been processed earlier.';
 $string['sandbox'] = 'Sandbox';
 $string['secret'] = 'Secret';
-$string['secret_help'] = 'The secret that payanyway generated for your application.';
+$string['secret_help'] = 'The secret that PayAnyWay generated for your application.';
+
+

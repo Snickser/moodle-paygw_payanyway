@@ -35,8 +35,7 @@ class gateway extends \core_payment\gateway {
         // See https://developer.payanyway.com/docs/api/reference/currency-codes/,
         // 3-character ISO-4217: https://en.wikipedia.org/wiki/ISO_4217#Active_codes.
         return [
-            'AUD', 'BRL', 'CAD', 'CHF', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'ILS', 'INR', 'JPY',
-            'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PLN', 'RUB', 'SEK', 'SGD', 'THB', 'TRY', 'TWD', 'USD'
+            'RUB', 'USD'
         ];
     }
 
@@ -50,25 +49,20 @@ class gateway extends \core_payment\gateway {
     public static function add_configuration_to_gateway_form(\core_payment\form\account_gateway $form): void {
         $mform = $form->get_mform();
 
-        $mform->addElement('text', 'brandname', get_string('brandname', 'paygw_payanyway'));
-        $mform->setType('brandname', PARAM_TEXT);
-        $mform->addHelpButton('brandname', 'brandname', 'paygw_payanyway');
+        $options = array('www.payanyway.ru'  => 'www.payanyway.ru',
+                         'demo.moneta.ru' => 'demo.moneta.ru');
+        $mform->addElement('select', 'paymentserver', get_string('paymentserver', 'paygw_payanyway'), $options);
+        $mform->setType('paymentserver', PARAM_TEXT);
 
-        $mform->addElement('text', 'clientid', get_string('clientid', 'paygw_payanyway'));
-        $mform->setType('clientid', PARAM_TEXT);
-        $mform->addHelpButton('clientid', 'clientid', 'paygw_payanyway');
+        $mform->addElement('text', 'mntid', get_string('mntid', 'paygw_payanyway'));
+        $mform->setType('mntid', PARAM_TEXT);
 
-        $mform->addElement('text', 'secret', get_string('secret', 'paygw_payanyway'));
-        $mform->setType('secret', PARAM_TEXT);
-        $mform->addHelpButton('secret', 'secret', 'paygw_payanyway');
+        $mform->addElement('text', 'mntdataintegritycode', get_string('mntdataintegritycode', 'paygw_payanyway'));
+        $mform->setType('mntdataintegritycode', PARAM_TEXT);
 
-        $options = [
-            'live' => get_string('live', 'paygw_payanyway'),
-            'sandbox'  => get_string('sandbox', 'paygw_payanyway'),
-        ];
+        $mform->addElement('checkbox', 'mnttestmode', get_string('mnttestmode', 'paygw_payanyway'));
+        $mform->setType('mnttestmode', PARAM_TEXT);
 
-        $mform->addElement('select', 'environment', get_string('environment', 'paygw_payanyway'), $options);
-        $mform->addHelpButton('environment', 'environment', 'paygw_payanyway');
     }
 
     /**
@@ -82,7 +76,7 @@ class gateway extends \core_payment\gateway {
     public static function validate_gateway_form(\core_payment\form\account_gateway $form,
                                                  \stdClass $data, array $files, array &$errors): void {
         if ($data->enabled &&
-                (empty($data->brandname) || empty($data->clientid) || empty($data->secret))) {
+                (empty($data->mntid) || empty($data->mntdataintegritycode) || empty($data->paymentserver))) {
             $errors['enabled'] = get_string('gatewaycannotbeenabled', 'payment');
         }
     }
