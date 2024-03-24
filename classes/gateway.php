@@ -18,7 +18,6 @@
  * Contains class for payanyway payment gateway.
  *
  * @package    paygw_payanyway
- * @copyright  2019 Shamim Rezaie <shamim@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -27,7 +26,6 @@ namespace paygw_payanyway;
 /**
  * The gateway class for payanyway payment gateway.
  *
- * @copyright  2019 Shamim Rezaie <shamim@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class gateway extends \core_payment\gateway {

@@ -18,7 +18,6 @@
  * Redirects user to the payment page
  *
  * @package   paygw_payanyway
- * @copyright 2022 Michael David <mikedh2612@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
