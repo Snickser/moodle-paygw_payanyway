@@ -32,8 +32,8 @@ $string['mnttestmode'] = 'Test mode';
 $string['paymentserver'] = 'Payment server URL';
 $string['callback'] = 'Callback URL';
 $string['callback_help'] = 'Copy this and put it in callback URLs at your PayAnyWay account.';
-
-
+$string['paymentsuccessful'] = 'Payment Successful';
+$string['paymentcancelled'] = 'Payment Cancelled';
 
 /* Payment systems */
 $string['paymentsystem'] = 'Payment system';
@@ -65,14 +65,5 @@ $string['mailofrussiasendername'] = 'Sender name';
 $string['webmoneyaccountid'] = 'Payment method';
 $string['sbp'] = 'SBP';
 
-
-
-//$string['amountmismatch'] = 'The amount you attempted to pay does not match the required fee. Your account has not been debited.';
-//$string['authorising'] = 'Authorising the payment. Please wait...';
-//$string['cannotfetchorderdatails'] = 'Could not fetch payment details from PayAnyWay. Your account has not been debited.';
 $string['internalerror'] = 'An internal error has occurred. Please contact us.';
-//$string['live'] = 'Live';
-//$string['paymentnotcleared'] = 'payment not cleared by PayAnyWay.';
 $string['privacy:metadata'] = 'The PayAnyWay plugin does not store any personal data.';
-//$string['repeatedorder'] = 'This order has already been processed earlier.';
-//$string['sandbox'] = 'Sandbox';
