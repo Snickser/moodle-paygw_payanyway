@@ -1,4 +1,4 @@
-# PayAnyWay payment gateway plugun for Moodle.
+# PayAnyWay payment gateway plugin for Moodle.
 
 Version 0.1
 
