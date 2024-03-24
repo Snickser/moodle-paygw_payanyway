@@ -1,12 +1,12 @@
 <?php
 
+use core_payment\helper;
 
-require("../../config.php");
-require_once("$CFG->dirroot/paygw/payanyway/lib.php");
-
+require("../../../config.php");
+//require_once("$CFG->dirroot/paygw/payanyway/lib.php");
+global $CFG, $USER, $DB;
 
 $data = array();
-
 foreach ($_REQUEST as $key => $value) {
 	$data[$key] = $value;
 }
@@ -15,29 +15,24 @@ if (!$payanywaytx = $DB->get_record('paygw_payanyway', array('id' => $data['MNT_
 	die('FAIL. Not a valid transaction id');
 }
 
-if (! $user = $DB->get_record("user", array("id"=>$payanywaytx->userid))) {
+if (! $userid = $DB->get_record("user", array("id"=>$payanywaytx->userid))) {
 	die('FAIL. Not a valid user id.');
 }
 
-if (! $course = $DB->get_record("course", array("id"=>$payanywaytx->courseid))) {
-	die('FAIL. Not a valid course id.');
-}
+$component   = $payanywaytx->component;
+$paymentarea = $payanywaytx->paymentarea;
+$itemid      = $payanywaytx->itemid;
 
-if (! $context = context_course::instance($course->id, IGNORE_MISSING)) {
-	die('FAIL. Not a valid context id.');
-}
+$config = (object) helper::get_gateway_configuration($component, $paymentarea, $itemid, 'payanyway');
+$payable = helper::get_payable($component, $paymentarea, $itemid);// Get currency and payment amount.
+$surcharge = helper::get_gateway_surcharge('payanyway');// In case user uses surcharge.
 
-if (! $plugin_instance = $DB->get_record("paygw", array("id"=>$payanywaytx->instanceid, "status"=>0))) {
-	die('FAIL. Not a valid instance id.');
-}
-
-$plugin = paygw_get_plugin('payanyway');
 
 if(isset($data['MNT_ID']) && isset($data['MNT_TRANSACTION_ID']) && isset($data['MNT_OPERATION_ID'])
 	&& isset($data['MNT_AMOUNT']) && isset($data['MNT_CURRENCY_CODE']) && isset($data['MNT_TEST_MODE'])
 	&& isset($data['MNT_SIGNATURE']))
 {
-	$MNT_SIGNATURE = md5("{$data['MNT_ID']}{$data['MNT_TRANSACTION_ID']}{$data['MNT_OPERATION_ID']}{$data['MNT_AMOUNT']}{$data['MNT_CURRENCY_CODE']}{$data['MNT_TEST_MODE']}".$plugin->get_config('mntdataintegritycode'));
+	$MNT_SIGNATURE = md5("{$data['MNT_ID']}{$data['MNT_TRANSACTION_ID']}{$data['MNT_OPERATION_ID']}{$data['MNT_AMOUNT']}{$data['MNT_CURRENCY_CODE']}{$data['MNT_TEST_MODE']}".$config->mntdataintegritycode);
 
 	if ($data['MNT_SIGNATURE'] !== $MNT_SIGNATURE) {
 		die('FAIL. Signature does not match.');
@@ -45,11 +40,10 @@ if(isset($data['MNT_ID']) && isset($data['MNT_TRANSACTION_ID']) && isset($data['
 
 	// Check that amount paid is the correct amount
 	if ( (float) $payanywaytx->cost <= 0 ) {
-		$cost = (float) $plugin->get_config('cost');
+		$cost = (float) $config->cost;
 	} else {
 		$cost = (float) $payanywaytx->cost;
 	}
-
 	// Use the same rounding of floats as on the paygw form.
 	$cost = number_format($cost, 2, '.', '');
 
@@ -57,20 +51,9 @@ if(isset($data['MNT_ID']) && isset($data['MNT_TRANSACTION_ID']) && isset($data['
 		die('FAIL. Amount does not match.');
 	}
 
-	if ($plugin_instance->paygwperiod) {
-		$timestart = time();
-		$timeend   = $timestart + $plugin_instance->paygwperiod;
-	} else {
-		$timestart = 0;
-		$timeend   = 0;
-	}
-
-	// paygw the user!
-	$plugin->paygw_user($plugin_instance, $payanywaytx->userid, $plugin_instance->roleid, $timestart, $timeend);
-
 	$payanywaytx->success = 1;
-	if (!$DB->update_record('paygw_payanyway_transactions', $payanywaytx)) {
-		die('FAIL');
+	if (!$DB->update_record('paygw_payanyway', $payanywaytx)) {
+		die('FAIL. Update db error.');
 	} else {
 		die('SUCCESS');
 	}
