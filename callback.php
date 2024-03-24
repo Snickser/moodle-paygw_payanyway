@@ -28,6 +28,7 @@ $paymentarea = $payanywaytx->paymentarea;
 $itemid      = $payanywaytx->itemid;
 $userid      = $payanywaytx->userid;
 
+
 $config = (object) helper::get_gateway_configuration($component, $paymentarea, $itemid, 'payanyway');
 
 if(isset($data['MNT_ID']) && isset($data['MNT_TRANSACTION_ID']) && isset($data['MNT_OPERATION_ID'])
@@ -59,6 +60,7 @@ if(isset($data['MNT_ID']) && isset($data['MNT_TRANSACTION_ID']) && isset($data['
 	$paymentid = helper::save_payment($payable->get_account_id(), $component, $paymentarea, $itemid, $userid, $cost, $payable->get_currency(), 'payanyway');
 	helper::deliver_order($component, $paymentarea, $itemid, $paymentid, $userid);
 
+	// write to DB
 	$payanywaytx->success = 1;
 	if (!$DB->update_record('paygw_payanyway', $payanywaytx)) {
 		die('FAIL. Update db error.');
