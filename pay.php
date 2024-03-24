@@ -84,7 +84,7 @@ redirect($paymenturl."
 	MNT_SIGNATURE={$mntsignature}&
 	MNT_SUCCESS_URL=".urlencode($CFG->wwwroot."/payment/gateway/payanyway/return.php?id=".$id)."&
 	MNT_FAIL_URL=".urlencode($CFG->wwwroot."/payment/gateway/payanyway/return.php?id=".$id)."&
-	MNT_CUSTOM1=".urlencode($component)."&
+	MNT_CUSTOM1=".urlencode($component.":".$paymentarea)."&
 	MNT_CUSTOM2=".urlencode(fullname($USER))."&
 	MNT_CUSTOM3=".urlencode($USER->email)."&
 	MNT_DESCRIPTION=".urlencode($description)."&
