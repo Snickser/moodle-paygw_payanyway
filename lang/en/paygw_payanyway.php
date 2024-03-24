@@ -30,6 +30,8 @@ $string['mntid'] = 'Account number';
 $string['mntdataintegritycode'] = 'Code of data integrity verification';
 $string['mnttestmode'] = 'Test mode';
 $string['paymentserver'] = 'Payment server URL';
+$string['callback'] = 'Callback URL';
+$string['callback_help'] = 'Copy this and put it in callback URLs at your PayAnyWay account.';
 
 
 

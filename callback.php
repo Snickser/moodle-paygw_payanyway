@@ -2,7 +2,7 @@
 
 
 require("../../config.php");
-require_once("$CFG->dirroot/enrol/payanyway/lib.php");
+require_once("$CFG->dirroot/paygw/payanyway/lib.php");
 
 
 $data = array();
@@ -11,7 +11,7 @@ foreach ($_REQUEST as $key => $value) {
 	$data[$key] = $value;
 }
 
-if (!$payanywaytx = $DB->get_record('enrol_payanyway_transactions', array('id' => $data['MNT_TRANSACTION_ID']))) {
+if (!$payanywaytx = $DB->get_record('paygw_payanyway', array('id' => $data['MNT_TRANSACTION_ID']))) {
 	die('FAIL. Not a valid transaction id');
 }
 
@@ -27,11 +27,11 @@ if (! $context = context_course::instance($course->id, IGNORE_MISSING)) {
 	die('FAIL. Not a valid context id.');
 }
 
-if (! $plugin_instance = $DB->get_record("enrol", array("id"=>$payanywaytx->instanceid, "status"=>0))) {
+if (! $plugin_instance = $DB->get_record("paygw", array("id"=>$payanywaytx->instanceid, "status"=>0))) {
 	die('FAIL. Not a valid instance id.');
 }
 
-$plugin = enrol_get_plugin('payanyway');
+$plugin = paygw_get_plugin('payanyway');
 
 if(isset($data['MNT_ID']) && isset($data['MNT_TRANSACTION_ID']) && isset($data['MNT_OPERATION_ID'])
 	&& isset($data['MNT_AMOUNT']) && isset($data['MNT_CURRENCY_CODE']) && isset($data['MNT_TEST_MODE'])
@@ -50,26 +50,26 @@ if(isset($data['MNT_ID']) && isset($data['MNT_TRANSACTION_ID']) && isset($data['
 		$cost = (float) $payanywaytx->cost;
 	}
 
-	// Use the same rounding of floats as on the enrol form.
+	// Use the same rounding of floats as on the paygw form.
 	$cost = number_format($cost, 2, '.', '');
 
 	if ($data['MNT_AMOUNT'] !== $cost) {
 		die('FAIL. Amount does not match.');
 	}
 
-	if ($plugin_instance->enrolperiod) {
+	if ($plugin_instance->paygwperiod) {
 		$timestart = time();
-		$timeend   = $timestart + $plugin_instance->enrolperiod;
+		$timeend   = $timestart + $plugin_instance->paygwperiod;
 	} else {
 		$timestart = 0;
 		$timeend   = 0;
 	}
 
-	// Enrol the user!
-	$plugin->enrol_user($plugin_instance, $payanywaytx->userid, $plugin_instance->roleid, $timestart, $timeend);
+	// paygw the user!
+	$plugin->paygw_user($plugin_instance, $payanywaytx->userid, $plugin_instance->roleid, $timestart, $timeend);
 
 	$payanywaytx->success = 1;
-	if (!$DB->update_record('enrol_payanyway_transactions', $payanywaytx)) {
+	if (!$DB->update_record('paygw_payanyway_transactions', $payanywaytx)) {
 		die('FAIL');
 	} else {
 		die('SUCCESS');

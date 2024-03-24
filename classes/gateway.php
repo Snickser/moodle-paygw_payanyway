@@ -35,7 +35,7 @@ class gateway extends \core_payment\gateway {
         // See https://developer.payanyway.com/docs/api/reference/currency-codes/,
         // 3-character ISO-4217: https://en.wikipedia.org/wiki/ISO_4217#Active_codes.
         return [
-            'RUB', 'USD'
+            'RUB', 'USD', 'EUR'
         ];
     }
 
@@ -85,8 +85,13 @@ class gateway extends \core_payment\gateway {
         $mform->addElement('text', 'mntdataintegritycode', get_string('mntdataintegritycode', 'paygw_payanyway'));
         $mform->setType('mntdataintegritycode', PARAM_TEXT);
 
-        $mform->addElement('checkbox', 'mnttestmode', get_string('mnttestmode', 'paygw_payanyway'));
+        $mform->addElement('advcheckbox', 'mnttestmode', get_string('mnttestmode', 'paygw_payanyway'), '0');
         $mform->setType('mnttestmode', PARAM_TEXT);
+
+        global $CFG;
+        $mform->addElement('html', '<span class="label-callback">'.get_string('callback', 'paygw_payanyway').':</span><br>');
+        $mform->addElement('html', '<span class="callback_url">'.$CFG->wwwroot.'/payment/gateway/payanyway/callback.php</span><br>');
+        $mform->addElement('html', '<span class="label-callback">'.get_string('callback_help', 'paygw_payanyway').'</span><br><br>');
 
     }
 

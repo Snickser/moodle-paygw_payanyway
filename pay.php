@@ -34,6 +34,8 @@ $paymentarea = required_param('paymentarea', PARAM_ALPHANUMEXT);
 $itemid      = required_param('itemid', PARAM_INT);
 $description = required_param('description', PARAM_TEXT);
 
+$description = json_decode("\"$description\"");
+
 $config = (object) helper::get_gateway_configuration($component, $paymentarea, $itemid, 'payanyway');
 $payable = helper::get_payable($component, $paymentarea, $itemid);// Get currency and payment amount.
 $currency = $payable->get_currency();
@@ -41,6 +43,7 @@ $surcharge = helper::get_gateway_surcharge('payanyway');// In case user uses sur
 
 // TODO: Check if currency is IDR. If not, then something went really wrong in config.
 $cost = helper::get_rounded_cost($payable->get_amount(), $payable->get_currency(), $surcharge);
+$cost = number_format($cost, 2, '.', '');
 
 // write tx to db
 $paygwdata = new stdClass();
@@ -52,28 +55,16 @@ $paygwdata->cost = $cost;
 $paygwdata->currency = $currency;
 $paygwdata->date_created = time();
 
-echo serialize($paygwdata)."<br>";
 
 if (!$transaction_id = $DB->insert_record('paygw_payanyway', $paygwdata)) {
     print_error('error_txdatabase', 'paygw_payanyway');
 }
+$id = $transaction_id;
 
-die;
-
-// make hash
+// make signature
 $mntsignature = md5($config->mntid.$transaction_id.$cost.$currency.$config->mnttestmode.$config->mntdataintegritycode);
 
 $paymenturl = "https://".$config->paymentserver."/assistant.htm?";
-
-$additionalparams = "";
-foreach($_REQUEST as $key=>$value)
-{
-        if (strpos($key, "additionalParameters") !== false || strpos($key, "paymentSystem") !== false)
-        {
-                $key = str_replace("_", ".", $key);
-                $additionalparams .= "&{$key}={$value}";
-        }
-}
 
 $paymentsystem = explode('_', $config->paymentsystem);
 $paymentsystemparams = "";
@@ -94,15 +85,10 @@ redirect($paymenturl."
 	MNT_SIGNATURE={$mntsignature}&
 	MNT_SUCCESS_URL=".urlencode($CFG->wwwroot."/payment/gateway/payanyway/return.php?id=".$id)."&
 	MNT_FAIL_URL=".urlencode($CFG->wwwroot."/payment/gateway/payanyway/return.php?id=".$id)."&
-	MNT_CUSTOM1=".urlencode($course->shortname)."&
+	MNT_CUSTOM1=".urlencode($component)."&
 	MNT_CUSTOM2=".urlencode(fullname($USER))."&
 	MNT_CUSTOM3=".urlencode($USER->email)."&
-	MNT_DESCRIPTION=".urlencode($course->fullname)."&
+	MNT_DESCRIPTION=".urlencode($description)."&
 	pawcmstype=moodle&
-	followup=true&
-	javascriptEnabled=true&
-	id={$id}&
-	paymentsystem={$paymentsystem[0]}
-        {$paymentsystemparams}
-        {$additionalparams}
+	{$paymentsystemparams}
 ");
