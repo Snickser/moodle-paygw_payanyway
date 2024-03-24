@@ -48,7 +48,6 @@ $paygwdata->userid = $USER->id;
 $paygwdata->component = $component;
 $paygwdata->paymentarea = $paymentarea;
 $paygwdata->itemid = $itemid;
-$paygwdata->description = $description;
 $paygwdata->timestamp = time();
 
 echo serialize($paygwdata)."<br>";
