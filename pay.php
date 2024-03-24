@@ -54,11 +54,11 @@ $paygwdata->date_created = time();
 
 echo serialize($paygwdata)."<br>";
 
-die;
-
 if (!$transaction_id = $DB->insert_record('paygw_payanyway', $paygwdata)) {
     print_error('error_txdatabase', 'paygw_payanyway');
 }
+
+die;
 
 // make hash
 $mntsignature = md5($config->mntid.$transaction_id.$cost.$currency.$config->mnttestmode.$config->mntdataintegritycode);
