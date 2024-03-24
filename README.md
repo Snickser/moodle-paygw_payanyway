@@ -18,3 +18,5 @@ Or upload it from Moodle plugins adminnistration interface.
 5. Enable the 'Enrolment on Payment' enrolment method
 6. Add the 'Enrolment on Payment' method to your chosen course
 7. Set the payment account, enrolment fee, and currency
+
+The plugin supports only basic functionality, but everything changes someday...
