@@ -1,4 +1,4 @@
-# Moodle paygw_payanyway
+# moodle-paygw_payanyway
 
 PayAnyWay payment gateway for Moodle.
 
