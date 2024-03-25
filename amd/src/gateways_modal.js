@@ -23,7 +23,7 @@
 
 export const process = (component, paymentArea, itemId, description) => {
     return () => {
-            location.href = M.cfg.wwwroot + '/payment/gateway/payanyway/pay.php?' +
+            location.href = M.cfg.wwwroot + '/payment/gateway/payanyway/method.php?' +
                 'component=' + component +
                 '&paymentarea=' + paymentArea +
                 '&itemid=' + itemId +

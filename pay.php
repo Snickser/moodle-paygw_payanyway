@@ -35,6 +35,10 @@ $description = required_param('description', PARAM_TEXT);
 
 $description = json_decode("\"$description\"");
 
+if ( isset($_REQUEST['cost_self']) ) {
+    $cost = number_format($_REQUEST['cost_self'], 2, '.', '');
+}
+
 $config = (object) helper::get_gateway_configuration($component, $paymentarea, $itemid, 'payanyway');
 $payable = helper::get_payable($component, $paymentarea, $itemid);// Get currency and payment amount.
 $currency = $payable->get_currency();
@@ -42,6 +46,10 @@ $surcharge = helper::get_gateway_surcharge('payanyway');// In case user uses sur
 
 // TODO: Check if currency is IDR. If not, then something went really wrong in config.
 $cost = helper::get_rounded_cost($payable->get_amount(), $payable->get_currency(), $surcharge);
+
+if ( isset($_REQUEST['cost_self']) ) {
+    $cost = $_REQUEST['cost_self'];
+}
 $cost = number_format($cost, 2, '.', '');
 
 // write tx to db
@@ -84,10 +92,10 @@ redirect($paymenturl."
 	MNT_SIGNATURE={$mntsignature}&
 	MNT_SUCCESS_URL=".urlencode($CFG->wwwroot."/payment/gateway/payanyway/return.php?id=".$id)."&
 	MNT_FAIL_URL=".urlencode($CFG->wwwroot."/payment/gateway/payanyway/return.php?id=".$id)."&
-	MNT_CUSTOM1=".urlencode($component.":".$paymentarea)."&
+	MNT_CUSTOM1=".urlencode($component.":".$paymentarea.":".$itemid)."&
 	MNT_CUSTOM2=".urlencode(fullname($USER))."&
 	MNT_CUSTOM3=".urlencode($USER->email)."&
-	MNT_DESCRIPTION=".urlencode($description)."&
+	MNT_DESCRIPTION=".get_string('payment','paygw_payanyway')."&
 	pawcmstype=moodle&
 	moneta.locale=".current_language()."&
 	followup=true&

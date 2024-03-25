@@ -20,8 +20,7 @@
  * @package    paygw_payanyway
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-$string['pluginname'] = 'PayAnyWay';
+$string['pluginname'] = 'PayAnyWay payment';
 $string['pluginname_desc'] = 'The PayAnyWay plugin allows you to receive payments via PayAnyWay.';
 $string['gatewaydescription'] = 'PayAnyWay is an authorised payment gateway provider for processing credit card transactions.';
 $string['gatewayname'] = 'PayAnyWay';
@@ -33,6 +32,10 @@ $string['callback'] = 'Callback URL';
 $string['callback_help'] = 'Copy this and put it in callback URLs at your PayAnyWay account.';
 $string['paymentsuccessful'] = 'Payment Successful';
 $string['paymentcancelled'] = 'Payment Cancelled';
+$string['paymore'] = 'If you want to donate more, simply enter your amount instead of the indicated amount.';
+$string['sendpaymentbutton'] = 'Send payment via PayAnyWay';
+$string['abouttopay'] = 'You are about to pay for';
+$string['payment'] = 'Donation';
 
 /* Payment systems */
 $string['paymentsystem'] = 'Payment system';
