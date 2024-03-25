@@ -55,7 +55,7 @@ $cost = helper::get_rounded_cost($payable->get_amount(), $currency, $surcharge);
 $PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/payment/gateway/payanyway/method.php', $params);
-$string = get_string('pluginname','paygw_payanyway');
+$string = get_string('payment','paygw_payanyway');
 $PAGE->set_title(format_string( $string ));
 $PAGE->set_heading(format_string( $string ));
 
