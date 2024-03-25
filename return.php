@@ -5,6 +5,8 @@ use core_payment\helper;
 require("../../../config.php");
 global $CFG, $USER, $DB;
 
+//require_login();
+
 defined('MOODLE_INTERNAL') || die();
 
 $id = required_param('MNT_TRANSACTION_ID', PARAM_INT);
