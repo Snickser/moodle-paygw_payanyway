@@ -23,7 +23,6 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 use core_payment\helper;
 
 require_once(__DIR__ . '/../../../config.php');
@@ -53,6 +52,25 @@ $currency = $payable->get_currency();
 $surcharge = helper::get_gateway_surcharge('payanyway');// In case user uses surcharge.
 $cost = helper::get_rounded_cost($payable->get_amount(), $currency, $surcharge);
 
+// get course info
+if($instance = $DB->get_record('enrol', ['id' => $itemid, 'enrol' => $paymentarea])){
+    $enrolperiod = $instance->enrolperiod;
+    if( $enrolperiod > 0 ){
+        if($enrolperiod>=86400){
+	    $enrolperiod_desc = get_string('days');
+	    $enrolperiod = round($enrolperiod/86400);
+	} else if($enrolperiod>=3600) {
+	    $enrolperiod_desc = get_string('hours');
+	    $enrolperiod = round($enrolperiod/3600);
+	} else if($enrolperiod>=60) {
+	    $enrolperiod_desc = get_string('minutes');
+	    $enrolperiod = round($enrolperiod/60);
+	} else {
+	    $enrolperiod_desc = get_string('seconds');
+	}
+    }
+}
+
 // Set the context of the page.
 $PAGE->set_context(context_system::instance());
 
@@ -74,6 +92,8 @@ $templatedata->itemid      = $itemid;
 $templatedata->description = $description;
 $templatedata->fee         = $cost;
 $templatedata->currency    = $currency;
+$templatedata->enrolperiod = $enrolperiod;
+$templatedata->enrolperiod_desc    = $enrolperiod_desc;
 
 echo $OUTPUT->render_from_template('paygw_payanyway/method', $templatedata);
 

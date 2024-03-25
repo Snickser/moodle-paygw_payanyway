@@ -25,25 +25,29 @@
     Example context (json):
     {
         "fee": "50.5",
-        "currency": "EGP",
-        "description": "for enrolment in course electronics",
+        "currency": "RUB",
+        "description": "for enrolment in course",
     }
 
 }}
-<form id="payanyway-method-select" action="{{{url}}}/payment/gateway/payanyway/pay.php" class="payanyway-form" method="post">
+<form id="payanyway-method-select" action="{{url}}/payment/gateway/payanyway/pay.php" class="payanyway-form" method="post">
     <div class="cost-display">
         <div style="text-align: center;">
-            <p>{{# str }} abouttopay, paygw_payanyway {{/ str}} "{{{description}}}".</p>
+            <p>{{# str }} abouttopay, paygw_payanyway {{/ str}} "{{description}}".</p>
 
 <p>{{# str }} paymore, paygw_payanyway {{/ str}}</p>
 
             <h3>{{# str }} cost {{/ str}}:
 
-<input type="number" id="cost_self" name="cost_self" min="{{{fee}}}" max="5000" value="{{{fee}}}" size="5">
+<input type="number" id="cost_self" name="cost_self" min="{{fee}}" max="5000" value="{{fee}}" size="5">
 
- {{{currency}}}</h3>
+ {{currency}}</h3>
 
-<!-- p><h5>{{# str }} enrolperiod, enrol_payanyway {{/ str}}: {{{enrolperiod}}}</h5></p -->
+{{#enrolperiod}}
+<p><h4>{{# str }} enrolperiod, enrol_payanyway {{/ str}} ({{enrolperiod_desc}}): {{enrolperiod}}</h4></p>
+{{/enrolperiod}}
+
+{{#pix}} icon, paygw_payanyway, logo {{/pix}}
 
         </div>
     </div>
@@ -51,10 +55,10 @@
 <br><br>
 
     <div class="hidden-inputs">
-        <input type="hidden" class="hidden-inputs" id="component" name="component" value="{{{component}}}">
-        <input type="hidden" class="hidden-inputs" id="paymentarea" name="paymentarea" value="{{{paymentarea}}}">
-        <input type="hidden" class="hidden-inputs" id="itemid" name="itemid" value="{{{itemid}}}">
-        <input type="hidden" class="hidden-inputs" id="description" name="description" value="{{{description}}}">
+        <input type="hidden" class="hidden-inputs" id="component" name="component" value="{{component}}">
+        <input type="hidden" class="hidden-inputs" id="paymentarea" name="paymentarea" value="{{paymentarea}}">
+        <input type="hidden" class="hidden-inputs" id="itemid" name="itemid" value="{{itemid}}">
+        <input type="hidden" class="hidden-inputs" id="description" name="description" value="{{description}}">
     </div>
 
     <div style="text-align: center;">
