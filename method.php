@@ -23,13 +23,15 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+
 use core_payment\helper;
 
 require_once(__DIR__ . '/../../../config.php');
+global $CFG, $USER, $DB;
+
+defined('MOODLE_INTERNAL') || die();
 
 require_login();
-
-global $CFG, $USER, $DB;
 
 $component   = required_param('component', PARAM_ALPHANUMEXT);
 $paymentarea = required_param('paymentarea', PARAM_ALPHANUMEXT);
