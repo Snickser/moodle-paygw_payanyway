@@ -90,5 +90,6 @@ redirect($paymenturl."
 	MNT_DESCRIPTION=".urlencode($description)."&
 	pawcmstype=moodle&
 	moneta.locale=".current_language()."&
+	followup=true&
 	{$paymentsystemparams}
 ");
