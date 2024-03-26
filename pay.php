@@ -86,7 +86,7 @@ if ( strlen($_REQUEST['password']) ) {
         $data = new stdClass();
         $data->id = $transaction_id;
         $data->success = 2;
-        $DB->update_record('paygw_robokassa', $data);
+        $DB->update_record('paygw_payanyway', $data);
 
         redirect($url, get_string('payment_success', 'paygw_payanyway'), 0, 'success');
     } else {
