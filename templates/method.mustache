@@ -48,7 +48,7 @@
 {{/enrolperiod}}
 
 <br>
-<img src="{{{image}}}" alt="logo" height="20">
+<img src="{{{image}}}" alt="PayAnyWay" height="20">
 
 
         </div>
@@ -64,6 +64,13 @@
     </div>
 
     <div style="text-align: center;">
+
+{{#passwordmode}}
+<p>
+{{# str }} password_text, paygw_payanyway {{/ str}} <br>
+{{# str }} password {{/ str}}: <input type="password" id="password" name="password" value="" autocomplete="off">
+</p>
+{{/passwordmode}}
 
 <p>{{# str }} paymentinstant {{/ str}}</p>
 

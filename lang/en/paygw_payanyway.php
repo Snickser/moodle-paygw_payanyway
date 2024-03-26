@@ -36,6 +36,10 @@ $string['paymore'] = 'If you want to donate more, simply enter your amount inste
 $string['sendpaymentbutton'] = 'Send payment via PayAnyWay';
 $string['abouttopay'] = 'You are about to pay for';
 $string['payment'] = 'Donation';
+$string['password'] = 'Password';
+$string['passwordmode'] = 'Password';
+$string['password_help'] = 'Using this password you can bypass the payback process. It can be useful when it is not possible to make a payment.';
+$string['password_text'] = 'If you are unable to make a payment, then ask your curator for a password and enter it.';
 
 /* Payment systems */
 $string['paymentsystem'] = 'Payment system';

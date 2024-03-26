@@ -85,6 +85,14 @@ class gateway extends \core_payment\gateway {
         $mform->addElement('advcheckbox', 'mnttestmode', get_string('mnttestmode', 'paygw_payanyway'), '0');
         $mform->setType('mnttestmode', PARAM_TEXT);
 
+        $mform->addElement('advcheckbox', 'passwordmode', get_string('passwordmode', 'paygw_robokassa'), '0');
+        $mform->setType('passwordmode', PARAM_TEXT);
+
+        $mform->addElement('text', 'password', get_string('password', 'paygw_payanyway'));
+        $mform->setType('password', PARAM_TEXT);
+        $mform->disabledIf('password', 'passwordmode');
+        $mform->addHelpButton('password', 'password', 'paygw_payanyway');
+
         global $CFG;
         $mform->addElement('html', '<span class="label-callback">'.get_string('callback', 'paygw_payanyway').':</span><br>');
         $mform->addElement('html', '<span class="callback_url">'.$CFG->wwwroot.'/payment/gateway/payanyway/callback.php</span><br>');

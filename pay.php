@@ -28,6 +28,8 @@ require_login();
 
 global $CFG, $USER, $DB;
 
+$userid = $USER->id;
+
 $component   = required_param('component', PARAM_ALPHANUMEXT);
 $paymentarea = required_param('paymentarea', PARAM_ALPHANUMEXT);
 $itemid      = required_param('itemid', PARAM_INT);
@@ -67,6 +69,32 @@ if (!$transaction_id = $DB->insert_record('paygw_payanyway', $paygwdata)) {
     print_error('error_txdatabase', 'paygw_payanyway');
 }
 $id = $transaction_id;
+
+
+// password mode
+if ( strlen($_REQUEST['password']) ) {
+    // build redirect
+    $url = helper::get_success_url($component, $paymentarea, $itemid);
+
+    // check password
+    if($_REQUEST['password'] == $config->password){
+        // make fake pay
+        $paymentid = helper::save_payment($payable->get_account_id(), $component, $paymentarea, $itemid, $userid, $cost, $payable->get_currency(), 'robokassa');
+        helper::deliver_order($component, $paymentarea, $itemid, $paymentid, $userid);
+
+        // write to DB
+        $data = new stdClass();
+        $data->id = $transaction_id;
+        $data->success = 2;
+        $DB->update_record('paygw_robokassa', $data);
+
+        redirect($url, get_string('payment_success', 'paygw_robokassa'), 0, 'success');
+    } else {
+        redirect($url, get_string('payment_error', 'paygw_robokassa'), 0, 'error');
+    }
+    die; // never
+}
+
 
 // make signature
 $mntsignature = md5($config->mntid.$transaction_id.$cost.$currency.$config->mnttestmode.$config->mntdataintegritycode);
