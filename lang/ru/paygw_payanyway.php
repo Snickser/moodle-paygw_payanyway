@@ -37,6 +37,10 @@ $string['currency'] = 'Валюта';
 $string['paymentserver'] = 'URL сервера оплаты';
 $string['mntid'] = 'Номер счета';
 $string['mntdataintegritycode'] = 'Код проверки целостности данных';
+$string['password'] = 'Резервный пароль';
+$string['passwordmode'] = 'Резервный пароль';
+$string['password_help'] = 'С помощью этого пароля можно обойти процесс отплаты. Может быть полезен когда нет возможности про извести оплату.';
+$string['password_text'] = 'Если у вас нет возможности сделать пожертвование, то попросите у вашего куратора пароль и введите его.';
 
 /* Payment systems */
 $string['paymentsystem'] = 'Платежная система';
