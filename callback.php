@@ -9,7 +9,6 @@ global $CFG, $USER, $DB;
 defined('MOODLE_INTERNAL') || die();
 
 
-
 $data = array();
 foreach ($_REQUEST as $key => $value) {
 	$data[$key] = $value;
@@ -30,6 +29,8 @@ $userid      = $payanywaytx->userid;
 
 
 $config = (object) helper::get_gateway_configuration($component, $paymentarea, $itemid, 'payanyway');
+$payable = helper::get_payable($component, $paymentarea, $itemid);
+
 
 if(isset($data['MNT_ID']) && isset($data['MNT_TRANSACTION_ID']) && isset($data['MNT_OPERATION_ID'])
 	&& isset($data['MNT_AMOUNT']) && isset($data['MNT_CURRENCY_CODE']) && isset($data['MNT_TEST_MODE'])
@@ -43,7 +44,7 @@ if(isset($data['MNT_ID']) && isset($data['MNT_TRANSACTION_ID']) && isset($data['
 
 	// Check that amount paid is the correct amount
 	if ( (float) $payanywaytx->cost <= 0 ) {
-		$cost = (float) $config->cost;
+		$cost = (float) $payable->get_amount();
 	} else {
 		$cost = (float) $payanywaytx->cost;
 	}
@@ -55,7 +56,6 @@ if(isset($data['MNT_ID']) && isset($data['MNT_TRANSACTION_ID']) && isset($data['
 	}
 
 	// Deliver course
-	$payable = helper::get_payable($component, $paymentarea, $itemid);
 	$cost = helper::get_rounded_cost($payable->get_amount(), $payable->get_currency(), helper::get_gateway_surcharge('payanyway'));
 	$paymentid = helper::save_payment($payable->get_account_id(), $component, $paymentarea, $itemid, $userid, $cost, $payable->get_currency(), 'payanyway');
 	helper::deliver_order($component, $paymentarea, $itemid, $paymentid, $userid);
