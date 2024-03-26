@@ -85,7 +85,7 @@ class gateway extends \core_payment\gateway {
         $mform->addElement('advcheckbox', 'mnttestmode', get_string('mnttestmode', 'paygw_payanyway'), '0');
         $mform->setType('mnttestmode', PARAM_TEXT);
 
-        $mform->addElement('advcheckbox', 'passwordmode', get_string('passwordmode', 'paygw_robokassa'), '0');
+        $mform->addElement('advcheckbox', 'passwordmode', get_string('passwordmode', 'paygw_payanyway'), '0');
         $mform->setType('passwordmode', PARAM_TEXT);
 
         $mform->addElement('text', 'password', get_string('password', 'paygw_payanyway'));

@@ -30,8 +30,6 @@ $string['mnttestmode'] = 'Test mode';
 $string['paymentserver'] = 'Payment server URL';
 $string['callback'] = 'Callback URL';
 $string['callback_help'] = 'Copy this and put it in callback URLs at your PayAnyWay account.';
-$string['paymentsuccessful'] = 'Payment Successful';
-$string['paymentcancelled'] = 'Payment Cancelled';
 $string['paymore'] = 'If you want to donate more, simply enter your amount instead of the indicated amount.';
 $string['sendpaymentbutton'] = 'Send payment via PayAnyWay';
 $string['abouttopay'] = 'You are about to pay for';
@@ -40,6 +38,8 @@ $string['password'] = 'Password';
 $string['passwordmode'] = 'Password';
 $string['password_help'] = 'Using this password you can bypass the payback process. It can be useful when it is not possible to make a payment.';
 $string['password_text'] = 'If you are unable to make a payment, then ask your curator for a password and enter it.';
+$string['payment_success'] = 'Payment Successful';
+$string['payment_error'] = 'Payment Error';
 
 /* Payment systems */
 $string['paymentsystem'] = 'Payment system';
