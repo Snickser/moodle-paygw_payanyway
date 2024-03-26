@@ -1,6 +1,6 @@
 # PayAnyWay payment gateway plugin for Moodle.
 
-Version 0.2
+Version 0.3
 
 https://payanyway.ru
 
