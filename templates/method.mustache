@@ -24,9 +24,16 @@
 
     Example context (json):
     {
-        "fee": "50.5",
+        "fee": "10.05",
         "currency": "RUB",
         "description": "for enrolment in course",
+        "enrolperiod": "1",
+        "enrolperiod_desc": "day"
+        "passwordmode": "1"
+        "skipmode": "1"
+        "suggested": "100"
+        "group": "Test"
+        "maxcost": "10"
     }
 
 }}
@@ -65,12 +72,21 @@
 
     <div style="text-align: center;">
 
+{{#skipmode}}
+<p>
+{{# str }} skipmode_text, paygw_payanyway {{/ str}} <br>
+<button type="submit" id="skipmode" name="skipmode" value="1" class="btn btn-secondary" style="background-color: lightgrey; color: black;" id="robokassa-modal-submit-btn">{{# str }} skippaymentbutton, paygw_payanyway {{/ str }}</button>
+</p><br>
+{{/skipmode}}
+
+{{^skipmode}}
 {{#passwordmode}}
 <p>
 {{# str }} password_text, paygw_payanyway {{/ str}} <br>
 {{# str }} password {{/ str}}: <input type="password" id="password" name="password" value="" autocomplete="off">
-</p>
+</p><br>
 {{/passwordmode}}
+{{/skipmode}}
 
 <p>{{# str }} paymentinstant {{/ str}}</p>
 
