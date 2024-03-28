@@ -67,18 +67,15 @@ if( $paymentarea == "fee" ){
 } else if( $paymentarea == "unlockfee" ) {
     $cs = $DB->get_record('gwpayments', ['id' => $itemid]);
 }
+$group_names = '';
 if( $cs->course ){
     $gs = groups_get_all_groups($cs->course, $userid);
-    $groups = array();
     foreach($gs as $g){
         $groups[] = $g->name;
     }
     $courseid = $cs->course;
-    $groups = implode(',', $groups);
-} else {
-    $groups = '';
+    if(count($groups)) $group_names = implode(',', $groups);
 }
-
 
 // write tx to db
 $paygwdata = new stdClass();
@@ -90,7 +87,7 @@ $paygwdata->cost = $cost;
 $paygwdata->currency = $currency;
 $paygwdata->date_created = date("Y-m-d H:i:s");
 $paygwdata->courseid = $courseid;
-$paygwdata->group_names = $groups;
+$paygwdata->group_names = $group_names;
 
 
 if (!$transaction_id = $DB->insert_record('paygw_payanyway', $paygwdata)) {
