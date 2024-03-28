@@ -118,9 +118,9 @@ if ( !empty($_REQUEST['password']) || !empty($_REQUEST['skipmode']) ){
         $data->cost = 0;
         $DB->update_record('paygw_payanyway', $data);
 
-        redirect($url, get_string('payment_success', 'paygw_payanyway'), 0, 'success');
+	redirect($url, get_string('password_success', 'paygw_payanyway'), 0, 'success');
     } else {
-        redirect($url, get_string('payment_error', 'paygw_payanyway'), 0, 'error');
+	redirect($url, get_string('password_error', 'paygw_payanyway'), 0, 'error');
     }
     die; // never
 }
