@@ -85,13 +85,25 @@ class gateway extends \core_payment\gateway {
         $mform->addElement('advcheckbox', 'mnttestmode', get_string('mnttestmode', 'paygw_payanyway'), '0');
         $mform->setType('mnttestmode', PARAM_TEXT);
 
+        $mform->addElement('advcheckbox', 'skipmode', get_string('skipmode', 'paygw_payanyway'), '0');
+        $mform->setType('skipmode', PARAM_TEXT);
+        $mform->addHelpButton('skipmode', 'skipmode', 'paygw_payanyway');
+
         $mform->addElement('advcheckbox', 'passwordmode', get_string('passwordmode', 'paygw_payanyway'), '0');
         $mform->setType('passwordmode', PARAM_TEXT);
+        $mform->disabledIf('passwordmode', 'skipmode', "neq", 0);
 
         $mform->addElement('text', 'password', get_string('password', 'paygw_payanyway'));
         $mform->setType('password', PARAM_TEXT);
         $mform->disabledIf('password', 'passwordmode');
+        $mform->disabledIf('password', 'skipmode', "neq", 0);
         $mform->addHelpButton('password', 'password', 'paygw_payanyway');
+
+        $mform->addElement('float', 'suggest', get_string('suggest', 'paygw_payanyway'));
+        $mform->setType('suggest', PARAM_FLOAT);
+
+        $mform->addElement('float', 'maxcost', get_string('maxcost', 'paygw_payanyway'));
+        $mform->setType('maxcost', PARAM_FLOAT);
 
         global $CFG;
         $mform->addElement('html', '<span class="label-callback">'.get_string('callback', 'paygw_payanyway').':</span><br>');
