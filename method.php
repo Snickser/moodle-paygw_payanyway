@@ -50,9 +50,11 @@ $config = (object) helper::get_gateway_configuration($component, $paymentarea, $
 $payable = helper::get_payable($component, $paymentarea, $itemid);// Get currency and payment amount.
 $currency = $payable->get_currency();
 $surcharge = helper::get_gateway_surcharge('payanyway');// In case user uses surcharge.
-$cost = helper::get_rounded_cost($payable->get_amount(), $currency, $surcharge);
+$fee = helper::get_rounded_cost($payable->get_amount(), $currency, $surcharge);
 
 // get course info
+$enrolperiod='';
+$enrolperiod_desc='';
 if($instance = $DB->get_record('enrol', ['id' => $itemid, 'enrol' => $paymentarea])){
     $enrolperiod = $instance->enrolperiod;
     if( $enrolperiod > 0 ){
@@ -90,11 +92,14 @@ $templatedata->component   = $component;
 $templatedata->paymentarea = $paymentarea;
 $templatedata->itemid      = $itemid;
 $templatedata->description = $description;
-$templatedata->fee         = $cost;
+$templatedata->fee         = $fee;
 $templatedata->currency    = $currency;
 $templatedata->enrolperiod = $enrolperiod;
 $templatedata->enrolperiod_desc = $enrolperiod_desc;
 $templatedata->passwordmode = $config->passwordmode;
+$templatedata->suggest = $config->suggest;
+$templatedata->maxcost = $config->maxcost;
+$templatedata->skipmode = $config->skipmode;
 
 $templatedata->image       = $OUTPUT->image_url('img','paygw_payanyway');
 

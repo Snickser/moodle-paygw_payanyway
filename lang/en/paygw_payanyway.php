@@ -40,6 +40,15 @@ $string['password_help'] = 'Using this password you can bypass the payback proce
 $string['password_text'] = 'If you are unable to make a payment, then ask your curator for a password and enter it.';
 $string['payment_success'] = 'Payment Successful';
 $string['payment_error'] = 'Payment Error';
+$string['password_success'] = 'Paymemt password accepted';
+$string['password_error'] = 'Invalid password';
+$string['paymore'] = 'If you want to donate more, simply enter your amount instead of the indicated amount.';
+$string['suggest'] = 'Suggested cost';
+$string['maxcost'] = 'Maximium cost';
+$string['skipmode'] = 'Can skip payment';
+$string['skipmode_help'] = 'This setting allows a payment bypass button, which can be useful in public courses with optional payment.';
+$string['skipmode_text'] = 'If you are not able to make a donation through the payment system, you can click on this button.';
+$string['skippaymentbutton'] = 'Skip payment :(';
 
 /* Payment systems */
 $string['paymentsystem'] = 'Payment system';
