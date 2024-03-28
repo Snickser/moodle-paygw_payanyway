@@ -69,10 +69,14 @@ if( $paymentarea == "fee" ){
 }
 if( $cs->course ){
     $gs = groups_get_all_groups($cs->course, $userid);
+    $groups = array();
     foreach($gs as $g){
-	$groups[] = $g->name;
+        $groups[] = $g->name;
     }
     $courseid = $cs->course;
+    $groups = implode(',', $groups);
+} else {
+    $groups = '';
 }
 
 
