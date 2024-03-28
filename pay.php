@@ -37,9 +37,6 @@ $description = required_param('description', PARAM_TEXT);
 
 $description = json_decode("\"$description\"");
 
-if ( isset($_REQUEST['cost_self']) ) {
-    $cost = number_format($_REQUEST['cost_self'], 2, '.', '');
-}
 
 $config = (object) helper::get_gateway_configuration($component, $paymentarea, $itemid, 'payanyway');
 $payable = helper::get_payable($component, $paymentarea, $itemid);// Get currency and payment amount.
@@ -49,20 +46,48 @@ $surcharge = helper::get_gateway_surcharge('payanyway');// In case user uses sur
 // TODO: Check if currency is IDR. If not, then something went really wrong in config.
 $cost = helper::get_rounded_cost($payable->get_amount(), $payable->get_currency(), $surcharge);
 
-if ( isset($_REQUEST['cost_self']) ) {
+// check self cost
+if ( !empty($_REQUEST['cost_self']) ) {
     $cost = $_REQUEST['cost_self'];
+}
+// check maxcost
+if ( $config->maxcost && $cost > $config->maxcost ) {
+    $cost = $config->maxcost;
 }
 $cost = number_format($cost, 2, '.', '');
 
+// get course and groups for user
+if( $paymentarea == "fee" ){
+    $cs = $DB->get_record('enrol', ['id' => $itemid]);
+    $cs->course = $cs->courseid;
+} else if( $paymentarea == "cmfee" ) {
+    $cs = $DB->get_record('course_modules', ['id' => $itemid]);
+} else if( $paymentarea == "sectionfee" ) {
+    $cs = $DB->get_record('course_sections', ['id' => $itemid]);
+} else if( $paymentarea == "unlockfee" ) {
+    $cs = $DB->get_record('gwpayments', ['id' => $itemid]);
+}
+$group_names = '';
+if( $cs->course ){
+    $gs = groups_get_all_groups($cs->course, $userid);
+    foreach($gs as $g){
+        $groups[] = $g->name;
+    }
+    $courseid = $cs->course;
+    if(count($groups)) $group_names = implode(',', $groups);
+}
+
 // write tx to db
 $paygwdata = new stdClass();
-$paygwdata->userid = $USER->id;
+$paygwdata->userid = $userid;
 $paygwdata->component = $component;
 $paygwdata->paymentarea = $paymentarea;
 $paygwdata->itemid = $itemid;
 $paygwdata->cost = $cost;
 $paygwdata->currency = $currency;
-$paygwdata->date_created = time();
+$paygwdata->date_created = date("Y-m-d H:i:s");
+$paygwdata->courseid = $courseid;
+$paygwdata->group_names = $group_names;
 
 
 if (!$transaction_id = $DB->insert_record('paygw_payanyway', $paygwdata)) {
@@ -72,10 +97,11 @@ $id = $transaction_id;
 
 
 // password mode
-if ( strlen($_REQUEST['password']) ) {
+if ( !empty($_REQUEST['password']) || !empty($_REQUEST['skipmode']) ){
     // build redirect
     $url = helper::get_success_url($component, $paymentarea, $itemid);
 
+    if(isset($_REQUEST['skipmode'])) $_REQUEST['password'] = $config->password;
     // check password
     if($_REQUEST['password'] == $config->password){
         // make fake pay
@@ -86,11 +112,12 @@ if ( strlen($_REQUEST['password']) ) {
         $data = new stdClass();
         $data->id = $transaction_id;
         $data->success = 2;
+        $data->cost = 0;
         $DB->update_record('paygw_payanyway', $data);
 
-        redirect($url, get_string('payment_success', 'paygw_payanyway'), 0, 'success');
+	redirect($url, get_string('password_success', 'paygw_payanyway'), 0, 'success');
     } else {
-        redirect($url, get_string('payment_error', 'paygw_payanyway'), 0, 'error');
+	redirect($url, get_string('password_error', 'paygw_payanyway'), 0, 'error');
     }
     die; // never
 }
