@@ -90,7 +90,7 @@ $paygwdata->cost = $cost;
 $paygwdata->currency = $currency;
 $paygwdata->date_created = date("Y-m-d H:i:s");
 $paygwdata->courseid = $courseid;
-$paygwdata->groups = $groups;
+$paygwdata->groups_name = $groups;
 
 
 if (!$transaction_id = $DB->insert_record('paygw_payanyway', $paygwdata)) {
