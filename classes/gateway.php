@@ -83,7 +83,7 @@ class gateway extends \core_payment\gateway {
         $mform->setType('mntdataintegritycode', PARAM_TEXT);
 
         $mform->addElement('advcheckbox', 'mnttestmode', get_string('mnttestmode', 'paygw_payanyway'), '0');
-        $mform->setType('mnttestmode', PARAM_TEXT);
+        $mform->setType('mnttestmode', PARAM_INT);
 
         $mform->addElement('advcheckbox', 'skipmode', get_string('skipmode', 'paygw_payanyway'), '0');
         $mform->setType('skipmode', PARAM_TEXT);

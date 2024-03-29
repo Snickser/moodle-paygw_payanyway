@@ -20,4 +20,4 @@ $component   = $payanywaytx->component;
 $itemid      = $payanywaytx->itemid;
 
 $url = helper::get_success_url($component, $paymentarea, $itemid);
-redirect($url, get_string('paymentsuccessful', 'paygw_payanyway'), 0, 'success');
+redirect($url, get_string('payment_success', 'paygw_payanyway'), 0, 'success');

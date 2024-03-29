@@ -8,18 +8,14 @@ global $CFG, $USER, $DB;
 
 defined('MOODLE_INTERNAL') || die();
 
+$transaction_id = required_param('MNT_TRANSACTION_ID', PARAM_INT);
 
-$data = array();
-foreach ($_REQUEST as $key => $value) {
-	$data[$key] = $value;
-}
-
-if (!$payanywaytx = $DB->get_record('paygw_payanyway', array('id' => $data['MNT_TRANSACTION_ID']))) {
-	die('FAIL. Not a valid transaction id');
+if (!$payanywaytx = $DB->get_record('paygw_payanyway', array('id' => $transaction_id))) {
+    die('FAIL. Not a valid transaction id');
 }
 
 if (! $userid = $DB->get_record("user", array("id"=>$payanywaytx->userid))) {
-	die('FAIL. Not a valid user id.');
+    die('FAIL. Not a valid user id.');
 }
 
 $component   = $payanywaytx->component;
@@ -27,9 +23,14 @@ $paymentarea = $payanywaytx->paymentarea;
 $itemid      = $payanywaytx->itemid;
 $userid      = $payanywaytx->userid;
 
-
 $config = (object) helper::get_gateway_configuration($component, $paymentarea, $itemid, 'payanyway');
 $payable = helper::get_payable($component, $paymentarea, $itemid);
+
+
+$data = array();
+foreach ($_REQUEST as $key => $value) {
+    $data[$key] = $value;
+}
 
 
 if(isset($data['MNT_ID']) && isset($data['MNT_TRANSACTION_ID']) && isset($data['MNT_OPERATION_ID'])
