@@ -89,12 +89,9 @@ $paygwdata->date_created = date("Y-m-d H:i:s");
 $paygwdata->courseid = $courseid;
 $paygwdata->group_names = $group_names;
 
-
 if (!$transaction_id = $DB->insert_record('paygw_payanyway', $paygwdata)) {
     print_error('error_txdatabase', 'paygw_payanyway');
 }
-$id = $transaction_id;
-
 
 // password mode
 if ( !empty($_REQUEST['password']) || !empty($_REQUEST['skipmode']) ){
@@ -145,8 +142,8 @@ redirect($paymenturl."
 	MNT_CURRENCY_CODE={$currency}&
 	MNT_AMOUNT={$cost}&
 	MNT_SIGNATURE={$mntsignature}&
-	MNT_SUCCESS_URL=".urlencode($CFG->wwwroot."/payment/gateway/payanyway/return.php?id=".$id)."&
-	MNT_FAIL_URL=".urlencode($CFG->wwwroot."/payment/gateway/payanyway/return.php?id=".$id)."&
+	MNT_SUCCESS_URL=".urlencode($CFG->wwwroot."/payment/gateway/payanyway/return.php?id=".$transaction_id)."&
+	MNT_FAIL_URL=".urlencode($CFG->wwwroot."/payment/gateway/payanyway/return.php?id=".$transaction_id)."&
 	MNT_CUSTOM1=".urlencode($component.":".$paymentarea.":".$itemid)."&
 	MNT_CUSTOM2=".urlencode(fullname($USER))."&
 	MNT_CUSTOM3=".urlencode($USER->email)."&
