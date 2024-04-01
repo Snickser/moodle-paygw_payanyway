@@ -104,6 +104,7 @@ if ( !empty($_REQUEST['password']) || !empty($_REQUEST['skipmode']) ){
     // check password
     if($_REQUEST['password'] == $config->password){
         // make fake pay
+	$cost = 0;
         $paymentid = helper::save_payment($payable->get_account_id(), $component, $paymentarea, $itemid, $userid, $cost, $payable->get_currency(), 'robokassa');
         helper::deliver_order($component, $paymentarea, $itemid, $paymentid, $userid);
 
