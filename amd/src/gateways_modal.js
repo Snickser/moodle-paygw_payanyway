@@ -14,9 +14,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This module is responsible for PayNL content in the gateways modal.
+ * This module is responsible for PayAnyWay content in the gateways modal.
  *
- * @module     paygw_paynl/gateways_modal
+ * @module     paygw_payanyway/gateways_modal
  * @copyright  2021 Ing. R.J. van Dongen <rogier@sebsoft.nl>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -25,7 +25,7 @@ import Templates from 'core/templates';
 import ModalFactory from 'core/modal_factory';
 
 /**
- * Show modal with the PayNL placeholder.
+ * Show modal with the PayAnyWay placeholder.
  *
  * @returns {Promise}
  */

@@ -40,7 +40,10 @@
 <form id="payanyway-method-select" action="{{url}}/payment/gateway/payanyway/pay.php" class="payanyway-form" method="post">
     <div class="cost-display">
         <div style="text-align: center;">
-            <p>{{# str }} abouttopay, paygw_payanyway {{/ str}} "{{description}}".</p>
+
+{{^fixdesc}}
+<p>{{# str }} abouttopay, paygw_robokassa {{/ str}} "{{description}}".</p>
+{{/fixdesc}}
 
 <p>{{# str }} paymore, paygw_payanyway {{/ str}}</p>
 

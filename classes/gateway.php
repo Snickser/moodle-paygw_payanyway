@@ -99,10 +99,14 @@ class gateway extends \core_payment\gateway {
         $mform->disabledIf('password', 'skipmode', "neq", 0);
         $mform->addHelpButton('password', 'password', 'paygw_payanyway');
 
-        $mform->addElement('float', 'suggest', get_string('suggest', 'paygw_payanyway'));
+        $mform->addElement('text', 'fixdesc', get_string('fixdesc', 'paygw_payanyway'), ['size' => 50]);
+        $mform->setType('fixdesc', PARAM_TEXT);
+        $mform->addHelpButton('fixdesc', 'fixdesc', 'paygw_payanyway');
+
+        $mform->addElement('float', 'suggest', get_string('suggest', 'paygw_payanyway'), ['size' => 10]);
         $mform->setType('suggest', PARAM_FLOAT);
 
-        $mform->addElement('float', 'maxcost', get_string('maxcost', 'paygw_payanyway'));
+        $mform->addElement('float', 'maxcost', get_string('maxcost', 'paygw_payanyway'), ['size' => 10]);
         $mform->setType('maxcost', PARAM_FLOAT);
 
         global $CFG;
