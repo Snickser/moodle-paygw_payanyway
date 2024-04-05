@@ -124,7 +124,7 @@ if ( !empty($_REQUEST['password']) || !empty($_REQUEST['skipmode']) ){
 
 
 // make signature
-$mntsignature = md5($config->mntid.$transaction_id.$cost.$currency.$config->mnttestmode.$config->mntdataintegritycode);
+$mntsignature = md5($config->mntid.$transaction_id.$cost.$currency.$USER->username.$config->mnttestmode.$config->mntdataintegritycode);
 
 $paymenturl = "https://".$config->paymentserver."/assistant.htm?";
 
@@ -139,14 +139,21 @@ if (isset($paymentsystem[3]) && !empty($paymentsystem[3]))
     $paymentsystemparams .= "paymentSystem.accountId={$paymentsystem[3]}&";
 }
 
+$ReturnURL = helper::get_success_url($component, $paymentarea, $itemid);
+$SuccessURL = $CFG->wwwroot."/payment/gateway/payanyway/return.php";
+$FailURL = $SuccessURL;
+
 redirect($paymenturl."
 	MNT_ID={$config->mntid}&
 	MNT_TRANSACTION_ID={$transaction_id}&
 	MNT_CURRENCY_CODE={$currency}&
 	MNT_AMOUNT={$cost}&
+	MNT_SUBSCRIBER_ID=".urlencode($USER->username)."&
+	MNT_TEST_MODE={$config->mnttestmode}&
 	MNT_SIGNATURE={$mntsignature}&
-	MNT_SUCCESS_URL=".urlencode($CFG->wwwroot."/payment/gateway/payanyway/return.php?id=".$transaction_id)."&
-	MNT_FAIL_URL=".urlencode($CFG->wwwroot."/payment/gateway/payanyway/return.php?id=".$transaction_id)."&
+	MNT_SUCCESS_URL=".urlencode($SuccessURL)."&
+	MNT_FAIL_URL=".urlencode($FailURL)."&
+	MNT_RETURN_URL=".urlencode($ReturnURL)."&
 	MNT_CUSTOM1=".urlencode($component.":".$paymentarea.":".$itemid)."&
 	MNT_CUSTOM2=".urlencode(fullname($USER))."&
 	MNT_CUSTOM3=".urlencode($USER->email)."&

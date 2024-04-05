@@ -32,14 +32,15 @@ foreach ($_REQUEST as $key => $value) {
     $data[$key] = $value;
 }
 
+//file_put_contents("/tmp/xxxx", serialize($data)."\n", FILE_APPEND);
 
 if(isset($data['MNT_ID']) && isset($data['MNT_TRANSACTION_ID']) && isset($data['MNT_OPERATION_ID'])
 	&& isset($data['MNT_AMOUNT']) && isset($data['MNT_CURRENCY_CODE']) && isset($data['MNT_TEST_MODE'])
-	&& isset($data['MNT_SIGNATURE']))
+	&& isset($data['MNT_SIGNATURE']) && isset($data['MNT_SUBSCRIBER_ID']))
 {
-	$MNT_SIGNATURE = md5("{$data['MNT_ID']}{$data['MNT_TRANSACTION_ID']}{$data['MNT_OPERATION_ID']}{$data['MNT_AMOUNT']}{$data['MNT_CURRENCY_CODE']}{$data['MNT_TEST_MODE']}".$config->mntdataintegritycode);
+	$SIGNATURE = md5("{$data['MNT_ID']}{$data['MNT_TRANSACTION_ID']}{$data['MNT_OPERATION_ID']}{$data['MNT_AMOUNT']}{$data['MNT_CURRENCY_CODE']}{$data['MNT_SUBSCRIBER_ID']}{$data['MNT_TEST_MODE']}".$config->mntdataintegritycode);
 
-	if ($data['MNT_SIGNATURE'] !== $MNT_SIGNATURE) {
+	if ($data['MNT_SIGNATURE'] !== $SIGNATURE) {
 		die('FAIL. Signature does not match.');
 	}
 
