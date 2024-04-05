@@ -101,6 +101,13 @@ $templatedata->suggest = $config->suggest;
 $templatedata->maxcost = $config->maxcost;
 $templatedata->skipmode = $config->skipmode;
 
+if(!empty($config->fixdesc)){
+    $templatedata->description = $config->fixdesc;
+    $templatedata->fixdesc = 1;
+} else {
+    $templatedata->description = $description;
+}
+
 $templatedata->image       = $OUTPUT->image_url('img','paygw_payanyway');
 
 echo $OUTPUT->render_from_template('paygw_payanyway/method', $templatedata);

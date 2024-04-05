@@ -40,7 +40,10 @@
 <form id="payanyway-method-select" action="{{url}}/payment/gateway/payanyway/pay.php" class="payanyway-form" method="post">
     <div class="cost-display">
         <div style="text-align: center;">
-            <p>{{# str }} abouttopay, paygw_payanyway {{/ str}} "{{description}}".</p>
+
+{{^fixdesc}}
+<p>{{# str }} abouttopay, paygw_payanyway {{/ str}} "{{description}}".</p>
+{{/fixdesc}}
 
 <p>{{# str }} paymore, paygw_payanyway {{/ str}}</p>
 
@@ -77,7 +80,7 @@ size="7" step="0.01">
 {{#skipmode}}
 <p>
 {{# str }} skipmode_text, paygw_payanyway {{/ str}} <br>
-<button type="submit" id="skipmode" name="skipmode" value="1" class="btn btn-secondary" style="background-color: lightgrey; color: black;" id="robokassa-modal-submit-btn">{{# str }} skippaymentbutton, paygw_payanyway {{/ str }}</button>
+<button type="submit" id="skipmode" name="skipmode" value="1" class="btn btn-secondary btn-paygw-skipmode" style="background-color: lightgrey; color: black;" id="robokassa-modal-submit-btn">{{# str }} skippaymentbutton, paygw_payanyway {{/ str }}</button>
 </p><br>
 {{/skipmode}}
 
