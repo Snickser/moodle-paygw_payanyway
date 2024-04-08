@@ -22,7 +22,7 @@
  */
 
 import Templates from 'core/templates';
-import ModalFactory from 'core/modal_factory';
+import Modal from 'core/modal';
 
 /**
  * Show modal with the PayAnyWay placeholder.
@@ -30,12 +30,12 @@ import ModalFactory from 'core/modal_factory';
  * @returns {Promise}
  */
 const showModalWithPlaceholder = async() => {
-    const modal = await ModalFactory.create({
+    const modal = await Modal.create({
         body: await Templates.render('paygw_payanyway/button_placeholder', {}),
         show: true,
         removeOnClose: true,
     });
-    modal.show();
+    modal.destroy();
 };
 
 /**
