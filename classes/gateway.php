@@ -99,6 +99,10 @@ class gateway extends \core_payment\gateway {
         $mform->disabledIf('password', 'skipmode', "neq", 0);
         $mform->addHelpButton('password', 'password', 'paygw_payanyway');
 
+        $mform->addElement('advcheckbox', 'usedetails', get_string('usedetails', 'paygw_payanyway'), get_string('usedetails', 'paygw_payanyway'));
+        $mform->setType('usedetails', PARAM_INT);
+        $mform->addHelpButton('usedetails', 'usedetails', 'paygw_payanyway');
+
         $mform->addElement('text', 'fixdesc', get_string('fixdesc', 'paygw_payanyway'), ['size' => 50]);
         $mform->setType('fixdesc', PARAM_TEXT);
         $mform->addHelpButton('fixdesc', 'fixdesc', 'paygw_payanyway');

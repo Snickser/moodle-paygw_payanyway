@@ -71,6 +71,11 @@ size="7" step="0.01">
     <button type="submit" class="btn btn-primary" id="payanyway-modal-submit-btn">{{# str }} sendpaymentbutton, paygw_payanyway {{/ str }}</button>
     </p><br>
 
+{{#usedetails}}
+<details>
+  <summary>{{# str }} usedetails_text, paygw_payanyway {{/ str }}</summary>
+{{/usedetails}}
+
 {{#skipmode}}
 <p>
 {{# str }} skipmode_text, paygw_payanyway {{/ str}} <br>
@@ -86,6 +91,11 @@ size="7" step="0.01">
 </p>
 {{/passwordmode}}
 {{/skipmode}}
+
+{{#usedetails}}
+</details>
+{{/usedetails}}
+
 
     </div>
 
