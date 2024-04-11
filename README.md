@@ -9,13 +9,6 @@ https://payanyway.ru
 ![alt text](https://github.com/Snickser/moodle-paygw_payanyway/blob/main/payanyway.png?raw=true)
 
 
-Features:
-+ Password to avoid payment & skip payment button.
-+ Saving the course number and groups in which the student is enrolled.
-+ Recommended payment price.
-+ Displaying course enrollment duration.
-+ The maximum cost limit for a form.
-
 
 INSTALLATION
 ------------
