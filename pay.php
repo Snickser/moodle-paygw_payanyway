@@ -59,27 +59,32 @@ if ($config->maxcost && $cost > $config->maxcost) {
 }
 $cost = number_format($cost, 2, '.', '');
 
-// get course and groups for user
-if ($paymentarea == "fee") {
+// Get course and groups for user
+if ($component == "enrol_fee") {
     $cs = $DB->get_record('enrol', ['id' => $itemid]);
     $cs->course = $cs->courseid;
 } else if ($paymentarea == "cmfee") {
     $cs = $DB->get_record('course_modules', ['id' => $itemid]);
 } else if ($paymentarea == "sectionfee") {
     $cs = $DB->get_record('course_sections', ['id' => $itemid]);
-} else if ($paymentarea == "unlockfee") {
+} else if ($component == "mod_gwpayments") {
     $cs = $DB->get_record('gwpayments', ['id' => $itemid]);
 }
-$groupnames = '';
-$courseid = '';
-if ($cs->course) {
+if (!empty($cs->course)) {
     $courseid = $cs->course;
-    if ($gs = groups_get_all_groups($cs->course, $userid)) {
-        foreach ($gs as $g) {
-            $groups[] = $g->name;
+    if ($gs = groups_get_user_groups($courseid, $userid, true)) {
+        foreach ($gs as $gr) {
+            foreach ($gr as $g) {
+                $groups[] = groups_get_group_name($g);
+            }
         }
-        $groupnames = implode(',', $groups);
+        if (isset($groups)) {
+            $groupnames = implode(',', $groups);
+        }
     }
+} else {
+    $groupnames = '';
+    $courseid = '';
 }
 
 // write tx to db
