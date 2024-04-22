@@ -50,35 +50,35 @@ $surcharge = helper::get_gateway_surcharge('payanyway');// In case user uses sur
 $cost = helper::get_rounded_cost($payable->get_amount(), $payable->get_currency(), $surcharge);
 
 // check self cost
-if ( !empty($costself) ) {
+if (!empty($costself)) {
     $cost = $costself;
 }
 // check maxcost
-if ( $config->maxcost && $cost > $config->maxcost ) {
+if ($config->maxcost && $cost > $config->maxcost) {
     $cost = $config->maxcost;
 }
 $cost = number_format($cost, 2, '.', '');
 
 // get course and groups for user
-if( $paymentarea == "fee" ){
+if ($paymentarea == "fee") {
     $cs = $DB->get_record('enrol', ['id' => $itemid]);
     $cs->course = $cs->courseid;
-} else if( $paymentarea == "cmfee" ) {
+} else if ($paymentarea == "cmfee") {
     $cs = $DB->get_record('course_modules', ['id' => $itemid]);
-} else if( $paymentarea == "sectionfee" ) {
+} else if ($paymentarea == "sectionfee") {
     $cs = $DB->get_record('course_sections', ['id' => $itemid]);
-} else if( $paymentarea == "unlockfee" ) {
+} else if ($paymentarea == "unlockfee") {
     $cs = $DB->get_record('gwpayments', ['id' => $itemid]);
 }
-$group_names = '';
+$groupnames = '';
 $courseid = '';
-if( $cs->course ){
+if ($cs->course) {
     $courseid = $cs->course;
-    if ($gs = groups_get_all_groups($cs->course, $userid)){
-        foreach($gs as $g){
-	    $groups[] = $g->name;
+    if ($gs = groups_get_all_groups($cs->course, $userid)) {
+        foreach ($gs as $g) {
+            $groups[] = $g->name;
         }
-        $group_names = implode(',', $groups);
+        $groupnames = implode(',', $groups);
     }
 }
 
@@ -92,77 +92,77 @@ $paygwdata->cost = $cost;
 $paygwdata->currency = $currency;
 $paygwdata->date_created = date("Y-m-d H:i:s");
 $paygwdata->courseid = $courseid;
-$paygwdata->group_names = $group_names;
+$paygwdata->group_names = $groupnames;
 
-if (!$transaction_id = $DB->insert_record('paygw_payanyway', $paygwdata)) {
+if (!$transactionid = $DB->insert_record('paygw_payanyway', $paygwdata)) {
     print_error('error_txdatabase', 'paygw_payanyway');
 }
 
 // password mode
-if ( !empty($password) || !empty($skipmode) ){
+if (!empty($password) || !empty($skipmode)) {
     // build redirect
     $url = helper::get_success_url($component, $paymentarea, $itemid);
 
-    if(isset($skipmode)) $password = $config->password;
+    if (isset($skipmode)) {
+        $password = $config->password;
+    }
     // check password
-    if($password === $config->password){
+    if ($password === $config->password) {
         // make fake pay
-	$cost = 0;
+        $cost = 0;
         $paymentid = helper::save_payment($payable->get_account_id(), $component, $paymentarea, $itemid, $userid, $cost, $payable->get_currency(), 'robokassa');
         helper::deliver_order($component, $paymentarea, $itemid, $paymentid, $userid);
 
         // write to DB
         $data = new stdClass();
-        $data->id = $transaction_id;
+        $data->id = $transactionid;
         $data->success = 2;
         $data->cost = 0;
         $DB->update_record('paygw_payanyway', $data);
 
-	redirect($url, get_string('password_success', 'paygw_payanyway'), 0, 'success');
+        redirect($url, get_string('password_success', 'paygw_payanyway'), 0, 'success');
     } else {
-	redirect($url, get_string('password_error', 'paygw_payanyway'), 0, 'error');
+        redirect($url, get_string('password_error', 'paygw_payanyway'), 0, 'error');
     }
     die; // never
 }
 
 
 // make signature
-$mntsignature = md5($config->mntid.$transaction_id.$cost.$currency.$USER->username.$config->mnttestmode.$config->mntdataintegritycode);
+$mntsignature = md5($config->mntid . $transactionid . $cost . $currency . $USER->username . $config->mnttestmode . $config->mntdataintegritycode);
 
-$paymenturl = "https://".$config->paymentserver."/assistant.htm?";
+$paymenturl = "https://" . $config->paymentserver . "/assistant.htm?";
 
 $paymentsystem = explode('_', $config->paymentsystem);
 $paymentsystemparams = "";
-if (!empty($paymentsystem[2]))
-{
+if (!empty($paymentsystem[2])) {
     $paymentsystemparams .= "paymentSystem.unitId={$paymentsystem[2]}&";
 }
-if (isset($paymentsystem[3]) && !empty($paymentsystem[3]))
-{
+if (isset($paymentsystem[3]) && !empty($paymentsystem[3])) {
     $paymentsystemparams .= "paymentSystem.accountId={$paymentsystem[3]}&";
 }
 
-$ReturnURL = helper::get_success_url($component, $paymentarea, $itemid);
-$SuccessURL = $CFG->wwwroot."/payment/gateway/payanyway/return.php";
-$FailURL = $SuccessURL;
+$returnurl = helper::get_success_url($component, $paymentarea, $itemid);
+$successurl = $CFG->wwwroot . "/payment/gateway/payanyway/return.php";
+$failurl = $successurl;
 
-redirect($paymenturl."
-	MNT_ID={$config->mntid}&
-	MNT_TRANSACTION_ID={$transaction_id}&
-	MNT_CURRENCY_CODE={$currency}&
-	MNT_AMOUNT={$cost}&
-	MNT_SUBSCRIBER_ID=".urlencode($USER->username)."&
-	MNT_TEST_MODE={$config->mnttestmode}&
-	MNT_SIGNATURE={$mntsignature}&
-	MNT_SUCCESS_URL=".urlencode($SuccessURL)."&
-	MNT_FAIL_URL=".urlencode($FailURL)."&
-	MNT_RETURN_URL=".urlencode($ReturnURL)."&
-	MNT_CUSTOM1=".urlencode($component.":".$paymentarea.":".$itemid)."&
-	MNT_CUSTOM2=".urlencode(fullname($USER))."&
-	MNT_CUSTOM3=".urlencode($USER->email)."&
-	MNT_DESCRIPTION=".get_string('payment','paygw_payanyway')."&
-	pawcmstype=moodle&
-	moneta.locale=".current_language()."&
-	followup=true&
-	{$paymentsystemparams}
+redirect($paymenturl . "
+MNT_ID={$config->mntid}&
+MNTTRANSACTIONID={$transactionid}&
+MNT_CURRENCY_CODE={$currency}&
+MNT_AMOUNT={$cost}&
+MNT_SUBSCRIBER_ID=" . urlencode($USER->username) . "&
+MNT_TEST_MODE={$config->mnttestmode}&
+MNT_SIGNATURE={$mntsignature}&
+MNT_SUCCESS_URL=" . urlencode($successurl) . "&
+MNT_FAIL_URL=" . urlencode($failurl) . "&
+MNT_RETURN_URL=" . urlencode($returnurl) . "&
+MNT_CUSTOM1=" . urlencode($component . ":" . $paymentarea . ":" . $itemid) . "&
+MNT_CUSTOM2=" . urlencode(fullname($USER)) . "&
+MNT_CUSTOM3=" . urlencode($USER->email) . "&
+MNT_DESCRIPTION=" . get_string('payment', 'paygw_payanyway') . "&
+pawcmstype=moodle&
+moneta.locale=" . current_language() . "&
+followup=true&
+{$paymentsystemparams}
 ");
