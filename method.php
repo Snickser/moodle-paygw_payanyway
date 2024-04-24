@@ -53,26 +53,26 @@ $surcharge = helper::get_gateway_surcharge('payanyway');// In case user uses sur
 $fee = helper::get_rounded_cost($payable->get_amount(), $currency, $surcharge);
 
 // get course info
-$enrolperiod='';
-$enrolperiod_desc='';
-if($instance = $DB->get_record('enrol', ['id' => $itemid, 'enrol' => $paymentarea])){
+$enrolperiod = '';
+$enrolperioddesc = '';
+if ($instance = $DB->get_record('enrol', ['id' => $itemid, 'enrol' => $paymentarea])) {
     $enrolperiod = $instance->enrolperiod;
-    if( $enrolperiod > 0 ){
-        if($enrolperiod>=86400*7){
-            $enrolperiod_desc = get_string('weeks');
-            $enrolperiod = $enrolperiod/(86400*7);
-        } else if($enrolperiod>=86400){
-	    $enrolperiod_desc = get_string('days');
-	    $enrolperiod = round($enrolperiod/86400);
-	} else if($enrolperiod>=3600) {
-	    $enrolperiod_desc = get_string('hours');
-	    $enrolperiod = round($enrolperiod/3600);
-	} else if($enrolperiod>=60) {
-	    $enrolperiod_desc = get_string('minutes');
-	    $enrolperiod = round($enrolperiod/60);
-	} else {
-	    $enrolperiod_desc = get_string('seconds');
-	}
+    if ($enrolperiod > 0) {
+        if ($enrolperiod >= 86400 * 7) {
+            $enrolperioddesc = get_string('weeks');
+            $enrolperiod = $enrolperiod / (86400 * 7);
+        } else if ($enrolperiod >= 86400) {
+            $enrolperioddesc = get_string('days');
+            $enrolperiod = round($enrolperiod / 86400);
+        } else if ($enrolperiod >= 3600) {
+            $enrolperioddesc = get_string('hours');
+            $enrolperiod = round($enrolperiod / 3600);
+        } else if ($enrolperiod >= 60) {
+            $enrolperioddesc = get_string('minutes');
+            $enrolperiod = round($enrolperiod / 60);
+        } else {
+            $enrolperioddesc = get_string('seconds');
+        }
     }
 }
 
@@ -80,17 +80,17 @@ if($instance = $DB->get_record('enrol', ['id' => $itemid, 'enrol' => $paymentare
 $PAGE->set_context(context_system::instance());
 
 $PAGE->set_url('/payment/gateway/payanyway/method.php', $params);
-$string = get_string('payment','paygw_payanyway');
-$PAGE->set_title(format_string( $string ));
-$PAGE->set_heading(format_string( $string ));
+$string = get_string('payment', 'paygw_payanyway');
+$PAGE->set_title(format_string($string));
+$PAGE->set_heading(format_string($string));
 
 // Set the appropriate headers for the page.
 $PAGE->set_cacheable(false);
-//$PAGE->set_pagelayout('standard');
+// $PAGE->set_pagelayout('standard');
 
 echo $OUTPUT->header();
 
-$templatedata = new stdClass;
+$templatedata = new stdClass();
 $templatedata->component   = $component;
 $templatedata->paymentarea = $paymentarea;
 $templatedata->itemid      = $itemid;
@@ -98,24 +98,24 @@ $templatedata->description = $description;
 $templatedata->fee         = $fee;
 $templatedata->currency    = $currency;
 $templatedata->enrolperiod = $enrolperiod;
-$templatedata->enrolperiod_desc = $enrolperiod_desc;
+$templatedata->enrolperiod_desc = $enrolperioddesc;
 $templatedata->passwordmode = $config->passwordmode;
 $templatedata->suggest = $config->suggest;
 $templatedata->maxcost = $config->maxcost;
 $templatedata->skipmode = $config->skipmode;
 
-if($config->skipmode || $config->passwordmode){
+if ($config->skipmode || $config->passwordmode) {
     $templatedata->usedetails = $config->usedetails;
 }
 
-if(!empty($config->fixdesc)){
+if (!empty($config->fixdesc)) {
     $templatedata->description = $config->fixdesc;
     $templatedata->fixdesc = 1;
 } else {
     $templatedata->description = $description;
 }
 
-$templatedata->image       = $OUTPUT->image_url('img','paygw_payanyway');
+$templatedata->image       = $OUTPUT->image_url('img', 'paygw_payanyway');
 
 echo $OUTPUT->render_from_template('paygw_payanyway/method', $templatedata);
 
