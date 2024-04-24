@@ -1,4 +1,5 @@
 .core_payment_gateways_modal .payanyway .icon {
     height: 16px;
     width: auto;
+    max-width: none;
 }
