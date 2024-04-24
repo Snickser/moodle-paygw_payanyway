@@ -70,6 +70,7 @@ if ($component == "enrol_fee") {
 } else if ($component == "mod_gwpayments") {
     $cs = $DB->get_record('gwpayments', ['id' => $itemid]);
 }
+$groupnames = '';
 if (!empty($cs->course)) {
     $courseid = $cs->course;
     if ($gs = groups_get_user_groups($courseid, $userid, true)) {
@@ -83,7 +84,6 @@ if (!empty($cs->course)) {
         }
     }
 } else {
-    $groupnames = '';
     $courseid = '';
 }
 
