@@ -103,16 +103,22 @@ if (!$transactionid = $DB->insert_record('paygw_payanyway', $paygwdata)) {
     print_error('error_txdatabase', 'paygw_payanyway');
 }
 
-// password mode
-if (!empty($password) || !empty($skipmode)) {
-    // build redirect
-    $url = helper::get_success_url($component, $paymentarea, $itemid);
+// Build redirect
+$url = helper::get_success_url($component, $paymentarea, $itemid);
 
-    if (isset($skipmode)) {
-        $password = $config->password;
+// Check passwordmode or skipmode
+if (!empty($password) || $skipmode) {
+    $success = false;
+    if ($config->skipmode) {
+        $success = true;
+    } else if ($config->passwordmode && !empty($config->password)) {
+    // Check password
+        if ($password === $config->password) {
+            $success = true;
+        }
     }
-    // check password
-    if ($password === $config->password) {
+
+    if ($success) {
         // make fake pay
         $cost = 0;
         $paymentid = helper::save_payment($payable->get_account_id(), $component, $paymentarea, $itemid, $userid, $cost, $payable->get_currency(), 'robokassa');
