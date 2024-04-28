@@ -114,9 +114,10 @@ class gateway extends \core_payment\gateway {
         $mform->setType('maxcost', PARAM_FLOAT);
 
         global $CFG;
-        $mform->addElement('html', '<span class="label-callback">' . get_string('callback', 'paygw_payanyway') . ':</span><br>');
-        $mform->addElement('html', '<span class="callback_url">' . $CFG->wwwroot . '/payment/gateway/payanyway/callback.php</span><br>');
-        $mform->addElement('html', '<span class="label-callback">' . get_string('callback_help', 'paygw_payanyway') . '</span><br><br>');
+        $mform->addElement('html', '<div class="label-callback" style="background: #F2EFE6; padding: 15px;">' .
+                                    get_string('callback', 'paygw_payanyway') . '<br>');
+        $mform->addElement('html', $CFG->wwwroot . '/payment/gateway/payanyway/callback.php<br>');
+        $mform->addElement('html', get_string('callback_help', 'paygw_payanyway') . '</div><br>');
     }
 
     /**
