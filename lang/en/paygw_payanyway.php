@@ -87,3 +87,14 @@ $string['sbp'] = 'SBP';
 
 $string['internalerror'] = 'An internal error has occurred. Please contact us.';
 $string['privacy:metadata'] = 'The PayAnyWay plugin does not store any personal data.';
+
+$string['privacy:metadata'] = 'The payanyway plugin store some personal data.';
+$string['privacy:metadata:paygw_payanyway:paygw_payanyway'] = 'Store some data';
+$string['privacy:metadata:paygw_payanyway:shopid'] = 'Shopid';
+$string['privacy:metadata:paygw_payanyway:apikey'] = 'ApiKey';
+$string['privacy:metadata:paygw_payanyway:email'] = 'Email';
+$string['privacy:metadata:paygw_payanyway:payanyway_plus'] = 'Send json data';
+$string['privacy:metadata:paygw_payanyway:invoiceid'] = 'Invoice id';
+$string['privacy:metadata:paygw_payanyway:courceid'] = 'Cource id';
+$string['privacy:metadata:paygw_payanyway:groupnames'] = 'Group names';
+$string['privacy:metadata:paygw_payanyway:success'] = 'Status';
