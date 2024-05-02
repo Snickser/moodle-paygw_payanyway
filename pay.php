@@ -32,6 +32,7 @@ global $CFG, $USER, $DB;
 
 $userid = $USER->id;
 
+
 $component   = required_param('component', PARAM_ALPHANUMEXT);
 $paymentarea = required_param('paymentarea', PARAM_ALPHANUMEXT);
 $itemid      = required_param('itemid', PARAM_INT);
@@ -92,7 +93,7 @@ if (!empty($cs->course)) {
 // Write tx to DB.
 $paygwdata = new stdClass();
 $paygwdata->courseid = $courseid;
-$paygwdata->group_names = $groupnames;
+$paygwdata->groupnames = $groupnames;
 
 if (!$transactionid = $DB->insert_record('paygw_payanyway', $paygwdata)) {
     die(get_string('error_txdatabase', 'paygw_robokassa'));
@@ -131,23 +132,6 @@ if (!empty($password) || $skipmode) {
     die; // Never.
 }
 
-// Make signature.
-$mntsignature = md5($config->mntid . $paymentid . $cost . $currency . $USER->username . $config->mnttestmode . $config->mntdataintegritycode);
-
-$paymenturl = "https://" . $config->paymentserver . "/assistant.htm?";
-
-$paymentsystem = explode('_', $config->paymentsystem);
-$paymentsystemparams = "";
-if (!empty($paymentsystem[2])) {
-    $paymentsystemparams .= "paymentSystem.unitId={$paymentsystem[2]}&";
-}
-if (isset($paymentsystem[3]) && !empty($paymentsystem[3])) {
-    $paymentsystemparams .= "paymentSystem.accountId={$paymentsystem[3]}&";
-}
-
-$returnurl = helper::get_success_url($component, $paymentarea, $itemid);
-$successurl = $CFG->wwwroot . "/payment/gateway/payanyway/return.php";
-$failurl = $successurl;
 
 // Save payment.
 $paymentid = helper::save_payment(
@@ -161,27 +145,42 @@ $paymentid = helper::save_payment(
     'payanyway'
 );
 
+// Make signature.
+$mntsignature = md5($config->mntid . $paymentid . $cost . $currency . $USER->email . $config->mnttestmode . $config->mntdataintegritycode);
+
+$paymentsystem = explode('_', $config->paymentsystem);
+$paymentsystemparams = "";
+if (!empty($paymentsystem[2])) {
+    $paymentsystemparams .= "&paymentSystem.unitId={$paymentsystem[2]}";
+}
+if (isset($paymentsystem[3]) && !empty($paymentsystem[3])) {
+    $paymentsystemparams .= "&paymentSystem.accountId={$paymentsystem[3]}";
+}
+
+$successurl = $CFG->wwwroot . "/payment/gateway/payanyway/return.php";
+
 // Write to DB.
 $paygwdata->paymentid = $paymentid;
 $DB->update_record('paygw_payanyway', $paygwdata);
 
-redirect($paymenturl . "
-MNT_ID={$config->mntid}&
-MNTTRANSACTIONID={$paymentid}&
-MNT_CURRENCY_CODE={$currency}&
-MNT_AMOUNT={$cost}&
-MNT_SUBSCRIBER_ID=" . urlencode($USER->username) . "&
-MNT_TEST_MODE={$config->mnttestmode}&
-MNT_SIGNATURE={$mntsignature}&
-MNT_SUCCESS_URL=" . urlencode($successurl) . "&
-MNT_FAIL_URL=" . urlencode($failurl) . "&
-MNT_RETURN_URL=" . urlencode($returnurl) . "&
-MNT_CUSTOM1=" . urlencode($component . ":" . $paymentarea . ":" . $itemid) . "&
-MNT_CUSTOM2=" . urlencode(fullname($USER)) . "&
-MNT_CUSTOM3=" . urlencode($USER->email) . "&
-MNT_DESCRIPTION=" . get_string('payment', 'paygw_payanyway') . "&
-pawcmstype=moodle&
-moneta.locale=" . current_language() . "&
-followup=true&
-{$paymentsystemparams}
-");
+$paymenturl = "https://" . $config->paymentserver . "/assistant.htm?";
+
+redirect($paymenturl .
+"MNT_ID=$config->mntid" .
+"&MNT_TRANSACTION_ID=$paymentid" .
+"&MNT_AMOUNT=$cost" .
+"&MNT_CURRENCY_CODE=$currency" .
+"&MNT_SUBSCRIBER_ID=" . urlencode($USER->email) .
+"&MNT_TEST_MODE=$config->mnttestmode" .
+"&MNT_SIGNATURE=$mntsignature" .
+"&MNT_SUCCESS_URL=" . urlencode($successurl) .
+"&MNT_FAIL_URL=" . urlencode($successurl) .
+"&MNT_RETURN_URL=" . urlencode($url) .
+// "&MNT_CUSTOM1=" . urlencode($component . ":" . $paymentarea . ":" . $itemid) .
+// "&MNT_CUSTOM2=" . urlencode(fullname($USER)) .
+// "&MNT_CUSTOM3=" . urlencode($USER->email) .
+"&MNT_DESCRIPTION=" . urlencode($description) .
+"&moneta.locale=" . current_language() .
+"&followup=true" .
+"$paymentsystemparams"
+);

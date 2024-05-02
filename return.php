@@ -1,4 +1,26 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Redirects user to the original page
+ *
+ * @package   paygw_payanyway
+ * @copyright 2024 Alex Orlov <snickser@gmail.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 use core_payment\helper;
 
@@ -9,17 +31,19 @@ defined('MOODLE_INTERNAL') || die();
 
 require_login();
 
-// file_put_contents("/tmp/xxxx", serialize($_REQUEST)."\n", FILE_APPEND);
-
 $id = required_param('MNT_TRANSACTION_ID', PARAM_INT);
 
-if (!$payanywaytx = $DB->get_record('paygw_payanyway', ['id' => $id])) {
+if (!$payanywaytx = $DB->get_record('paygw_payanyway', ['paymentid' => $id])) {
     die('FAIL. Not a valid transaction id');
 }
 
-$paymentarea = $payanywaytx->paymentarea;
-$component   = $payanywaytx->component;
-$itemid      = $payanywaytx->itemid;
+if (!$payment = $DB->get_record('payments', ['id' => $payanywaytx->paymentid])) {
+    die('FAIL. Not a valid payment.');
+}
+
+$paymentarea = $payment->paymentarea;
+$component   = $payment->component;
+$itemid      = $payment->itemid;
 
 $url = helper::get_success_url($component, $paymentarea, $itemid);
 if ($payanywaytx->success) {
