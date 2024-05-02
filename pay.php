@@ -24,6 +24,8 @@
 use core_payment\helper;
 
 require_once(__DIR__ . '/../../../config.php');
+require_once($CFG->libdir . '/filelib.php');
+
 require_login();
 
 global $CFG, $USER, $DB;
@@ -49,17 +51,17 @@ $surcharge = helper::get_gateway_surcharge('payanyway');// In case user uses sur
 // TODO: Check if currency is IDR. If not, then something went really wrong in config.
 $cost = helper::get_rounded_cost($payable->get_amount(), $payable->get_currency(), $surcharge);
 
-// check self cost
+// Check self cost.
 if (!empty($costself)) {
     $cost = $costself;
 }
-// check maxcost
+// Check maxcost.
 if ($config->maxcost && $cost > $config->maxcost) {
     $cost = $config->maxcost;
 }
 $cost = number_format($cost, 2, '.', '');
 
-// Get course and groups for user
+// Get course and groups for user.
 if ($component == "enrol_fee") {
     $cs = $DB->get_record('enrol', ['id' => $itemid]);
     $cs->course = $cs->courseid;
@@ -87,59 +89,49 @@ if (!empty($cs->course)) {
     $courseid = '';
 }
 
-// write tx to db
+// Write tx to DB.
 $paygwdata = new stdClass();
-$paygwdata->userid = $userid;
-$paygwdata->component = $component;
-$paygwdata->paymentarea = $paymentarea;
-$paygwdata->itemid = $itemid;
-$paygwdata->cost = $cost;
-$paygwdata->currency = $currency;
-$paygwdata->date_created = date("Y-m-d H:i:s");
 $paygwdata->courseid = $courseid;
 $paygwdata->group_names = $groupnames;
 
 if (!$transactionid = $DB->insert_record('paygw_payanyway', $paygwdata)) {
-    print_error('error_txdatabase', 'paygw_payanyway');
+    die('error_txdatabase', 'paygw_payanyway');
 }
 
-// Build redirect
+// Build redirect.
 $url = helper::get_success_url($component, $paymentarea, $itemid);
 
-// Check passwordmode or skipmode
+// Check passwordmode or skipmode.
 if (!empty($password) || $skipmode) {
     $success = false;
     if ($config->skipmode) {
         $success = true;
     } else if ($config->passwordmode && !empty($config->password)) {
-    // Check password
+        // Check password.
         if ($password === $config->password) {
             $success = true;
         }
     }
 
     if ($success) {
-        // make fake pay
-        $cost = 0;
-        $paymentid = helper::save_payment($payable->get_account_id(), $component, $paymentarea, $itemid, $userid, $cost, $payable->get_currency(), 'robokassa');
+        // Make fake pay.
+        $paymentid = helper::save_payment($payable->get_account_id(), $component, $paymentarea, $itemid, $userid, 0, $payable->get_currency(), 'payanyway');
         helper::deliver_order($component, $paymentarea, $itemid, $paymentid, $userid);
 
-        // write to DB
-        $data = new stdClass();
-        $data->id = $transactionid;
-        $data->success = 2;
-        $data->cost = 0;
-        $DB->update_record('paygw_payanyway', $data);
+        // Write to DB.
+        $paygwdata->id = $transactionid;
+        $paygwdata->success = 2;
+        $DB->update_record('paygw_payanyway', $paygwdata);
 
         redirect($url, get_string('password_success', 'paygw_payanyway'), 0, 'success');
     } else {
         redirect($url, get_string('password_error', 'paygw_payanyway'), 0, 'error');
     }
-    die; // never
+    die; // Never.
 }
 
 
-// make signature
+// Make signature.
 $mntsignature = md5($config->mntid . $transactionid . $cost . $currency . $USER->username . $config->mnttestmode . $config->mntdataintegritycode);
 
 $paymenturl = "https://" . $config->paymentserver . "/assistant.htm?";
