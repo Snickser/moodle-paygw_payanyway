@@ -95,7 +95,7 @@ $paygwdata->courseid = $courseid;
 $paygwdata->group_names = $groupnames;
 
 if (!$transactionid = $DB->insert_record('paygw_payanyway', $paygwdata)) {
-    die('error_txdatabase', 'paygw_payanyway');
+    die(get_string('error_txdatabase', 'paygw_robokassa'));
 }
 $paygwdata->id = $transactionid;
 
