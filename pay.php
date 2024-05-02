@@ -50,7 +50,6 @@ $payable = helper::get_payable($component, $paymentarea, $itemid);// Get currenc
 $currency = $payable->get_currency();
 $surcharge = helper::get_gateway_surcharge('payanyway');// In case user uses surcharge.
 
-// TODO: Check if currency is IDR. If not, then something went really wrong in config.
 $cost = helper::get_rounded_cost($payable->get_amount(), $payable->get_currency(), $surcharge);
 
 // Check self cost.
@@ -118,7 +117,16 @@ if (!empty($password) || $skipmode) {
 
     if ($success) {
         // Make fake pay.
-        $paymentid = helper::save_payment($payable->get_account_id(), $component, $paymentarea, $itemid, $userid, 0, $payable->get_currency(), 'payanyway');
+        $paymentid = helper::save_payment(
+            $payable->get_account_id(),
+            $component,
+            $paymentarea,
+            $itemid,
+            $userid,
+            0,
+            $payable->get_currency(),
+            'payanyway'
+        );
         helper::deliver_order($component, $paymentarea, $itemid, $paymentid, $userid);
 
         // Write to DB.
@@ -147,7 +155,8 @@ $paymentid = helper::save_payment(
 );
 
 // Make signature.
-$mntsignature = md5($config->mntid . $paymentid . $cost . $currency . $USER->email . $config->mnttestmode . $config->mntdataintegritycode);
+$mntsignature = md5($config->mntid . $paymentid . $cost . $currency . $USER->email .
+                    $config->mnttestmode . $config->mntdataintegritycode);
 
 $paymentsystem = explode('_', $config->paymentsystem);
 $paymentsystemparams = "";
@@ -177,9 +186,6 @@ redirect($paymenturl .
 "&MNT_SUCCESS_URL=" . urlencode($successurl) .
 "&MNT_FAIL_URL=" . urlencode($successurl) .
 "&MNT_RETURN_URL=" . urlencode($url) .
-// "&MNT_CUSTOM1=" . urlencode($component . ":" . $paymentarea . ":" . $itemid) .
-// "&MNT_CUSTOM2=" . urlencode(fullname($USER)) .
-// "&MNT_CUSTOM3=" . urlencode($USER->email) .
 "&MNT_DESCRIPTION=" . urlencode($description) .
 "&moneta.locale=" . current_language() .
 "&followup=true" .

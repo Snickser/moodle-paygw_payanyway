@@ -17,8 +17,9 @@
 /**
  * Strings for component 'paygw_payanyway', language 'en'
  *
- * @package    paygw_payanyway
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     paygw_payanyway
+ * @copyright   2024 Alex Orlov <snickser@gmail.com>
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 $string['pluginname'] = 'PayAnyWay payment';
 $string['pluginname_desc'] = 'The PayAnyWay plugin allows you to receive payments via PayAnyWay.';
