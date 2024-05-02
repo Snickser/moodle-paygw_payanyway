@@ -18,13 +18,14 @@
  * Plugin version and other meta-data are defined here.
  *
  * @package     paygw_payanyway
+ * @copyright   2024 Alex Orlov <snickser@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2024040301;
-$plugin->requires = 2023100900;
+$plugin->version   = 2024050200;
+$plugin->requires  = 2022112800;
 $plugin->component = 'paygw_payanyway';
-$plugin->release = '0.6';
-$plugin->maturity = MATURITY_STABLE;
+$plugin->release   = '0.7';
+$plugin->maturity  = MATURITY_STABLE;

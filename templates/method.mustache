@@ -24,15 +24,16 @@
 
     Example context (json):
     {
+        "image": "http://url",
         "fee": "10.05",
         "currency": "RUB",
         "description": "for enrolment in course",
         "enrolperiod": "1",
-        "enrolperiod_desc": "day"
-        "passwordmode": "1"
-        "skipmode": "1"
-        "suggested": "100"
-        "group": "Test"
+        "enrolperiod_desc": "day",
+        "passwordmode": "1",
+        "skipmode": "1",
+        "suggested": "100",
+        "group": "Test",
         "maxcost": "10"
     }
 
@@ -47,29 +48,27 @@
 
 <p>{{# str }} paymore, paygw_payanyway {{/ str}}</p>
 
-            <h3>{{# str }} cost {{/ str}}:
-
-<input type="number" id="costself" name="costself" min="{{fee}}" {{#maxcost}}max="{{maxcost}}"{{/maxcost}}
-value="{{#suggest}}{{suggest}}{{/suggest}}{{^suggest}}{{fee}}{{/suggest}}"
-size="7" step="0.01">
-
- {{currency}}</h3>
+<h3>{{# str }} cost {{/ str}}:
+ <input type="number" id="costself" name="costself" min="{{fee}}" {{#maxcost}}max="{{maxcost}}"{{/maxcost}}
+ value="{{#suggest}}{{suggest}}{{/suggest}}{{^suggest}}{{fee}}{{/suggest}}"
+ step="0.01" style="width: 5em;">&nbsp;{{currency}}
+</h3>
 
 {{#enrolperiod}}
-<p><h4>{{# str }} enrolperiod, enrol_payanyway {{/ str}} ({{enrolperiod_desc}}): {{enrolperiod}}</h4></p>
+<h4>{{# str }} enrolperiod, enrol_payanyway {{/ str}} ({{enrolperiod_desc}}): {{enrolperiod}}</h4>
 {{/enrolperiod}}
-</p>
+
 <img src="{{{image}}}" alt="PayAnyWay" height="20">
 
         </div>
     </div>
-</p><br>
+<br><br>
 
     <div style="text-align: center;">
 
 <p>{{# str }} paymentinstant {{/ str}}</p>
-    <button type="submit" class="btn btn-primary" id="payanyway-modal-submit-btn">{{# str }} sendpaymentbutton, paygw_payanyway {{/ str }}</button>
-    </p><br>
+<button type="submit" class="btn btn-primary" id="payanyway-modal-submit-btn">{{# str }} sendpaymentbutton, paygw_payanyway {{/ str }}</button>
+<br>
 
 {{#usedetails}}
 <details>
@@ -79,7 +78,7 @@ size="7" step="0.01">
 {{#skipmode}}
 <p>
 {{# str }} skipmode_text, paygw_payanyway {{/ str}} <br>
-<button type="submit" id="skipmode" name="skipmode" value="1" class="btn btn-secondary btn-paygw-skipmode" style="background-color: lightgrey; color: black;" id="robokassa-modal-submit-btn">{{# str }} skippaymentbutton, paygw_payanyway {{/ str }}</button>
+<button type="submit" id="skipmode" name="skipmode" value="1" class="btn btn-secondary btn-paygw-skipmode" style="background-color: lightgrey; color: black;">{{# str }} skippaymentbutton, paygw_payanyway {{/ str }}</button>
 </p>
 {{/skipmode}}
 

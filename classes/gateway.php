@@ -18,6 +18,7 @@
  * Contains class for payanyway payment gateway.
  *
  * @package    paygw_payanyway
+ * @copyright  2024 Alex Orlov <snicker@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -29,6 +30,9 @@ namespace paygw_payanyway;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class gateway extends \core_payment\gateway {
+    /**
+     * Configuration form for currency
+     */
     public static function get_supported_currencies(): array {
         // 3-character ISO-4217: https://en.wikipedia.org/wiki/ISO_4217#Active_codes.
         return [
@@ -53,25 +57,8 @@ class gateway extends \core_payment\gateway {
 
         $paymentsystems = [
             'payanyway_0_0' => get_string('payanyway', 'paygw_payanyway'),
-// 'moneta_0_1015' => get_string('moneta', 'paygw_payanyway'),
             'plastic_0_card' => get_string('plastic', 'paygw_payanyway'),
             'sbp_0_12299232' => get_string('sbp', 'paygw_payanyway'),
-// 'webmoney_0_1017' => get_string('webmoney', 'paygw_payanyway'),
-// 'yandex_0_1020' => get_string('yandex', 'paygw_payanyway'),
-// 'moneymail_0_1038' => get_string('moneymail', 'paygw_payanyway'),
-// 'wallet_0_310212' => get_string('wallet', 'paygw_payanyway'),
-// 'banktransfer_1_705000_75983431' => get_string('banktransfer', 'paygw_payanyway'),
-// 'ciberpay_1_489755_19357960' => get_string('ciberpay', 'paygw_payanyway'),
-// 'comepay_1_228820_47654606' => get_string('comepay', 'paygw_payanyway'),
-// 'contact_1_1028_26' => get_string('contact', 'paygw_payanyway'),
-// 'elecsnet_1_232821_10496472' => get_string('elecsnet', 'paygw_payanyway'),
-// 'euroset_1_248362_136' => get_string('euroset', 'paygw_payanyway'),
-// 'forward_1_83046_116' => get_string('forward', 'paygw_payanyway'),
-// 'gorod_1_426904_152' => get_string('gorod', 'paygw_payanyway'),
-// 'mcb_1_295339_143' => get_string('mcb', 'paygw_payanyway'),
-// 'novoplat_1_281129_80314912' => get_string('novoplat', 'paygw_payanyway'),
-// 'platika_1_226272_15662295' => get_string('platika', 'paygw_payanyway'),
-// 'post_1_1029_15' => get_string('post', 'paygw_payanyway'),
         ];
         $mform->addElement('select', 'paymentsystem', get_string('paymentsystem', 'paygw_payanyway'), $paymentsystems);
         $mform->setDefault('paymentsystem', get_string('paymentsystem', 'paygw_payanyway'));
@@ -99,7 +86,12 @@ class gateway extends \core_payment\gateway {
         $mform->disabledIf('password', 'skipmode', "neq", 0);
         $mform->addHelpButton('password', 'password', 'paygw_payanyway');
 
-        $mform->addElement('advcheckbox', 'usedetails', get_string('usedetails', 'paygw_payanyway'), get_string('usedetails', 'paygw_payanyway'));
+        $mform->addElement(
+            'advcheckbox',
+            'usedetails',
+            get_string('usedetails', 'paygw_payanyway'),
+            get_string('usedetails', 'paygw_payanyway')
+        );
         $mform->setType('usedetails', PARAM_INT);
         $mform->addHelpButton('usedetails', 'usedetails', 'paygw_payanyway');
 
@@ -114,9 +106,10 @@ class gateway extends \core_payment\gateway {
         $mform->setType('maxcost', PARAM_FLOAT);
 
         global $CFG;
-        $mform->addElement('html', '<span class="label-callback">' . get_string('callback', 'paygw_payanyway') . ':</span><br>');
-        $mform->addElement('html', '<span class="callback_url">' . $CFG->wwwroot . '/payment/gateway/payanyway/callback.php</span><br>');
-        $mform->addElement('html', '<span class="label-callback">' . get_string('callback_help', 'paygw_payanyway') . '</span><br><br>');
+        $mform->addElement('html', '<div class="label-callback" style="background: #F2EFE6; padding: 15px;">' .
+                                    get_string('callback', 'paygw_payanyway') . '<br>');
+        $mform->addElement('html', $CFG->wwwroot . '/payment/gateway/payanyway/callback.php<br>');
+        $mform->addElement('html', get_string('callback_help', 'paygw_payanyway') . '</div><br>');
     }
 
     /**

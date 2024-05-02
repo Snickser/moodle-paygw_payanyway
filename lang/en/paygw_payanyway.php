@@ -17,8 +17,9 @@
 /**
  * Strings for component 'paygw_payanyway', language 'en'
  *
- * @package    paygw_payanyway
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     paygw_payanyway
+ * @copyright   2024 Alex Orlov <snickser@gmail.com>
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 $string['pluginname'] = 'PayAnyWay payment';
 $string['pluginname_desc'] = 'The PayAnyWay plugin allows you to receive payments via PayAnyWay.';
@@ -28,7 +29,7 @@ $string['mntid'] = 'Account number';
 $string['mntdataintegritycode'] = 'Code of data integrity verification';
 $string['mnttestmode'] = 'Test mode';
 $string['paymentserver'] = 'Payment server URL';
-$string['callback'] = 'Callback URL';
+$string['callback'] = 'Callback URL:';
 $string['callback_help'] = 'Copy this and put it in callback URLs at your PayAnyWay account.';
 $string['paymore'] = 'If you want to donate more, simply enter your amount instead of the indicated amount.';
 $string['sendpaymentbutton'] = 'Send payment via PayAnyWay';
@@ -87,3 +88,14 @@ $string['sbp'] = 'SBP';
 
 $string['internalerror'] = 'An internal error has occurred. Please contact us.';
 $string['privacy:metadata'] = 'The PayAnyWay plugin does not store any personal data.';
+
+$string['privacy:metadata'] = 'The payanyway plugin store some personal data.';
+$string['privacy:metadata:paygw_payanyway:paygw_payanyway'] = 'Store some data';
+$string['privacy:metadata:paygw_payanyway:shopid'] = 'Shopid';
+$string['privacy:metadata:paygw_payanyway:apikey'] = 'ApiKey';
+$string['privacy:metadata:paygw_payanyway:email'] = 'Email';
+$string['privacy:metadata:paygw_payanyway:payanyway_plus'] = 'Send json data';
+$string['privacy:metadata:paygw_payanyway:invoiceid'] = 'Invoice id';
+$string['privacy:metadata:paygw_payanyway:courceid'] = 'Cource id';
+$string['privacy:metadata:paygw_payanyway:groupnames'] = 'Group names';
+$string['privacy:metadata:paygw_payanyway:success'] = 'Status';

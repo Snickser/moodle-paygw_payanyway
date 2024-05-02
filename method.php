@@ -18,8 +18,7 @@
  * Plugin administration pages are defined here.
  *
  * @package     paygw_payanyway
- * @category    admin
- * @copyright   2023 Mohammad Farouk <phun.for.physics@gmail.com>
+ * @copyright   2024 Alex Orlov <snickser@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -52,7 +51,7 @@ $currency = $payable->get_currency();
 $surcharge = helper::get_gateway_surcharge('payanyway');// In case user uses surcharge.
 $fee = helper::get_rounded_cost($payable->get_amount(), $currency, $surcharge);
 
-// get course info
+// Get course info.
 $enrolperiod = '';
 $enrolperioddesc = '';
 if ($instance = $DB->get_record('enrol', ['id' => $itemid, 'enrol' => $paymentarea])) {
@@ -86,7 +85,7 @@ $PAGE->set_heading(format_string($string));
 
 // Set the appropriate headers for the page.
 $PAGE->set_cacheable(false);
-// $PAGE->set_pagelayout('standard');
+$PAGE->set_pagelayout('standard');
 
 echo $OUTPUT->header();
 
@@ -115,7 +114,7 @@ if (!empty($config->fixdesc)) {
     $templatedata->description = $description;
 }
 
-$templatedata->image       = $OUTPUT->image_url('img', 'paygw_payanyway');
+$templatedata->image = $OUTPUT->image_url('img', 'paygw_payanyway');
 
 echo $OUTPUT->render_from_template('paygw_payanyway/method', $templatedata);
 
