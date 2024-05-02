@@ -183,5 +183,4 @@ redirect($paymenturl .
 "&MNT_DESCRIPTION=" . urlencode($description) .
 "&moneta.locale=" . current_language() .
 "&followup=true" .
-"$paymentsystemparams"
-);
+"$paymentsystemparams");
