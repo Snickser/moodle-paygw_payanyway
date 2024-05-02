@@ -52,12 +52,6 @@ $userid      = $payment->userid;
 $config = (object) helper::get_gateway_configuration($component, $paymentarea, $itemid, 'payanyway');
 $payable = helper::get_payable($component, $paymentarea, $itemid);
 
-/*
-$crc = md5("{$data['MNT_ID']}{$data['MNT_TRANSACTION_ID']}{$data['MNT_OPERATION_ID']}{$data['MNT_AMOUNT']}
-            {$data['MNT_CURRENCY_CODE']}{$data['MNT_SUBSCRIBER_ID']}{$data['MNT_TEST_MODE']}" .
-            $config->mntdataintegritycode);
-*/
-
 // Use the same rounding of floats as on the paygw form.
 $cost = number_format($payment->amount, 2, '.', '');
 
