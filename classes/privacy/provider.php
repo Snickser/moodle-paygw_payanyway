@@ -48,8 +48,6 @@ class provider implements \core_privacy\local\request\data_provider, paygw_provi
         $collection->add_external_location_link(
             'payanyway.plus',
             [
-                'shopid'   => 'privacy:metadata:paygw_payanyway:shopid',
-                'apikey'   => 'privacy:metadata:paygw_payanyway:apikey',
                 'email'    => 'privacy:metadata:paygw_payanyway:email',
             ],
             'privacy:metadata:paygw_payanyway:payanyway_plus'
@@ -59,7 +57,6 @@ class provider implements \core_privacy\local\request\data_provider, paygw_provi
         $collection->add_database_table(
             'paygw_payanyway',
             [
-                'invoiceid'  => 'privacy:metadata:paygw_payanyway:invoiceid',
                 'courceid'   => 'privacy:metadata:paygw_payanyway:courceid',
                 'groupnames' => 'privacy:metadata:paygw_payanyway:groupnames',
                 'success'    => 'privacy:metadata:paygw_payanyway:success',
