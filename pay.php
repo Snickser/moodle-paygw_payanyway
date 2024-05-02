@@ -97,6 +97,7 @@ $paygwdata->group_names = $groupnames;
 if (!$transactionid = $DB->insert_record('paygw_payanyway', $paygwdata)) {
     die('error_txdatabase', 'paygw_payanyway');
 }
+$paygwdata->id = $transactionid;
 
 // Build redirect.
 $url = helper::get_success_url($component, $paymentarea, $itemid);
@@ -119,8 +120,8 @@ if (!empty($password) || $skipmode) {
         helper::deliver_order($component, $paymentarea, $itemid, $paymentid, $userid);
 
         // Write to DB.
-        $paygwdata->id = $transactionid;
         $paygwdata->success = 2;
+        $paygwdata->paymentid = $paymentid;
         $DB->update_record('paygw_payanyway', $paygwdata);
 
         redirect($url, get_string('password_success', 'paygw_payanyway'), 0, 'success');
@@ -130,9 +131,8 @@ if (!empty($password) || $skipmode) {
     die; // Never.
 }
 
-
 // Make signature.
-$mntsignature = md5($config->mntid . $transactionid . $cost . $currency . $USER->username . $config->mnttestmode . $config->mntdataintegritycode);
+$mntsignature = md5($config->mntid . $paymentid . $cost . $currency . $USER->username . $config->mnttestmode . $config->mntdataintegritycode);
 
 $paymenturl = "https://" . $config->paymentserver . "/assistant.htm?";
 
@@ -149,9 +149,25 @@ $returnurl = helper::get_success_url($component, $paymentarea, $itemid);
 $successurl = $CFG->wwwroot . "/payment/gateway/payanyway/return.php";
 $failurl = $successurl;
 
+// Save payment.
+$paymentid = helper::save_payment(
+    $payable->get_account_id(),
+    $component,
+    $paymentarea,
+    $itemid,
+    $userid,
+    $cost,
+    $payable->get_currency(),
+    'payanyway'
+);
+
+// Write to DB.
+$paygwdata->paymentid = $paymentid;
+$DB->update_record('paygw_payanyway', $paygwdata);
+
 redirect($paymenturl . "
 MNT_ID={$config->mntid}&
-MNTTRANSACTIONID={$transactionid}&
+MNTTRANSACTIONID={$paymentid}&
 MNT_CURRENCY_CODE={$currency}&
 MNT_AMOUNT={$cost}&
 MNT_SUBSCRIBER_ID=" . urlencode($USER->username) . "&
