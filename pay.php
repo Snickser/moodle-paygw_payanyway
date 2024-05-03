@@ -158,13 +158,10 @@ $paymentid = helper::save_payment(
 $mntsignature = md5($config->mntid . $paymentid . $cost . $currency . $USER->username .
                     $config->mnttestmode . $config->mntdataintegritycode);
 
-$paymentsystem = explode('_', $config->paymentsystem);
-$paymentsystemparams = "";
-if (!empty($paymentsystem[2])) {
-    $paymentsystemparams .= "&paymentSystem.unitId={$paymentsystem[2]}";
-}
-if (isset($paymentsystem[3]) && !empty($paymentsystem[3])) {
-    $paymentsystemparams .= "&paymentSystem.accountId={$paymentsystem[3]}";
+if (!empty($config->paymentsystem)) {
+    $paymentsystem = '&paymentSystem.unitId=' . $config->paymentsystem;
+} else {
+    $paymentsystem = '';
 }
 
 $successurl = $CFG->wwwroot . "/payment/gateway/payanyway/return.php";
@@ -188,5 +185,4 @@ redirect($paymenturl .
 "&MNT_RETURN_URL=" . urlencode($url) .
 "&MNT_DESCRIPTION=" . urlencode($description) .
 "&moneta.locale=" . current_language() .
-"&followup=true" .
-"$paymentsystemparams");
+"&followup=true" . $paymentsystem);

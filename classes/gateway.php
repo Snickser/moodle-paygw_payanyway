@@ -56,9 +56,10 @@ class gateway extends \core_payment\gateway {
         $mform->setType('paymentserver', PARAM_TEXT);
 
         $paymentsystems = [
-            'payanyway_0_0' => get_string('payanyway', 'paygw_payanyway'),
-            'plastic_0_card' => get_string('plastic', 'paygw_payanyway'),
-            'sbp_0_12299232' => get_string('sbp', 'paygw_payanyway'),
+            '0' => get_string('payanyway', 'paygw_payanyway'),
+            'card' => get_string('plastic', 'paygw_payanyway'),
+            '1015' => get_string('moneta', 'paygw_payanyway'),
+            '12299232' => get_string('sbp', 'paygw_payanyway'),
         ];
         $mform->addElement('select', 'paymentsystem', get_string('paymentsystem', 'paygw_payanyway'), $paymentsystems);
         $mform->setDefault('paymentsystem', get_string('paymentsystem', 'paygw_payanyway'));
