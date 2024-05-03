@@ -155,7 +155,7 @@ $paymentid = helper::save_payment(
 );
 
 // Make signature.
-$mntsignature = md5($config->mntid . $paymentid . $cost . $currency . $USER->email .
+$mntsignature = md5($config->mntid . $paymentid . $cost . $currency . $USER->username .
                     $config->mnttestmode . $config->mntdataintegritycode);
 
 $paymentsystem = explode('_', $config->paymentsystem);
@@ -180,7 +180,7 @@ redirect($paymenturl .
 "&MNT_TRANSACTION_ID=$paymentid" .
 "&MNT_AMOUNT=$cost" .
 "&MNT_CURRENCY_CODE=$currency" .
-"&MNT_SUBSCRIBER_ID=" . urlencode($USER->email) .
+"&MNT_SUBSCRIBER_ID=" . urlencode($USER->username) .
 "&MNT_TEST_MODE=$config->mnttestmode" .
 "&MNT_SIGNATURE=$mntsignature" .
 "&MNT_SUCCESS_URL=" . urlencode($successurl) .
