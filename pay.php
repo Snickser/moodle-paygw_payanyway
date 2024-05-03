@@ -155,16 +155,13 @@ $paymentid = helper::save_payment(
 );
 
 // Make signature.
-$mntsignature = md5($config->mntid . $paymentid . $cost . $currency . $USER->email .
+$mntsignature = md5($config->mntid . $paymentid . $cost . $currency . $USER->username .
                     $config->mnttestmode . $config->mntdataintegritycode);
 
-$paymentsystem = explode('_', $config->paymentsystem);
-$paymentsystemparams = "";
-if (!empty($paymentsystem[2])) {
-    $paymentsystemparams .= "&paymentSystem.unitId={$paymentsystem[2]}";
-}
-if (isset($paymentsystem[3]) && !empty($paymentsystem[3])) {
-    $paymentsystemparams .= "&paymentSystem.accountId={$paymentsystem[3]}";
+if (!empty($config->paymentsystem)) {
+    $paymentsystem = '&paymentSystem.unitId=' . $config->paymentsystem;
+} else {
+    $paymentsystem = '';
 }
 
 $successurl = $CFG->wwwroot . "/payment/gateway/payanyway/return.php";
@@ -180,7 +177,7 @@ redirect($paymenturl .
 "&MNT_TRANSACTION_ID=$paymentid" .
 "&MNT_AMOUNT=$cost" .
 "&MNT_CURRENCY_CODE=$currency" .
-"&MNT_SUBSCRIBER_ID=" . urlencode($USER->email) .
+"&MNT_SUBSCRIBER_ID=" . urlencode($USER->username) .
 "&MNT_TEST_MODE=$config->mnttestmode" .
 "&MNT_SIGNATURE=$mntsignature" .
 "&MNT_SUCCESS_URL=" . urlencode($successurl) .
@@ -188,5 +185,4 @@ redirect($paymenturl .
 "&MNT_RETURN_URL=" . urlencode($url) .
 "&MNT_DESCRIPTION=" . urlencode($description) .
 "&moneta.locale=" . current_language() .
-"&followup=true" .
-"$paymentsystemparams");
+"&followup=true" . $paymentsystem);
