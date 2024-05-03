@@ -96,10 +96,20 @@ $templatedata->itemid      = $itemid;
 $templatedata->description = $description;
 $templatedata->fee         = $fee;
 $templatedata->currency    = $currency;
-$templatedata->enrolperiod = $enrolperiod;
-$templatedata->enrolperiod_desc = $enrolperioddesc;
+
+if ($config->showduration) {
+    $templatedata->enrolperiod = $enrolperiod;
+    $templatedata->enrolperiod_desc = $enrolperioddesc;
+}
+
 $templatedata->passwordmode = $config->passwordmode;
-$templatedata->suggest = $config->suggest;
+
+if ($config->suggest < $fee) {
+    $templatedata->suggest = $fee;
+} else {
+    $templatedata->suggest = $config->suggest;
+}
+
 $templatedata->maxcost = $config->maxcost;
 $templatedata->skipmode = $config->skipmode;
 
