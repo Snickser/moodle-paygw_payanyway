@@ -66,8 +66,14 @@ if ($crc !== $signature) {
 // Deliver.
 helper::deliver_order($component, $paymentarea, $itemid, $paymentid, $userid);
 
+// Check test-mode.
+if ($config->mnttestmode) {
+    $payanywaytx->success = 3;
+} else {
+    $payanywaytx->success = 1;
+}
+
 // Write to DB.
-$payanywaytx->success = 1;
 if (!$DB->update_record('paygw_payanyway', $payanywaytx)) {
     die('FAIL. Update db error.');
 } else {
