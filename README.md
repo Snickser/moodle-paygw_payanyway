@@ -8,15 +8,19 @@ https://payanyway.ru
 
 ![alt text](https://github.com/Snickser/moodle-paygw_payanyway/blob/main/payanyway.png?raw=true)
 
-Рекомендации
-------------
+## Рекомендации
+
 + Тестировалось с Moodle 4.3.4.
 + Для записи в курс подходит стандарный плагин "Зачисление за оплату" (enrol_fee).
 + Для контрольного задания используйте модуль "[Gateway Payments](https://moodle.org/plugins/mod_gwpayments)" (мои правки [mod_gwpayments](https://github.com/Snickser/moodle-mod_gwpayments/tree/dev)), он правда глючный, но других пока нет.
 + Для ограничения доступности используйте модуль "[PaymentS availability condition for paid access](https://moodle.org/plugins/availability_gwpayments)" (мои правки [availability_gwpayments](https://github.com/Snickser/moodle-availability_gwpayments/tree/dev)).
 
-INSTALLATION
-------------
+## Status
+
+[![Build Status](https://github.com/Snickser/moodle-paygw_payanyway/actions/workflows/moodle-ci.yml/badge.svg)](https://github.com/Snickser/moodle-paygw_payanyway/actions/workflows/moodle-ci.yml)
+
+## INSTALLATION
+
 Download the latest paygw_payanyway.zip and unzip the contents into the /payment/gateway directory. Or upload it from Moodle plugins adminnistration interface.
 
 1. Install the plugin
