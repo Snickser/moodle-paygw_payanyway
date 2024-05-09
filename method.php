@@ -55,24 +55,30 @@ $fee = helper::get_rounded_cost($payable->get_amount(), $currency, $surcharge);
 // Get course info.
 $enrolperiod = '';
 $enrolperioddesc = '';
-if ($instance = $DB->get_record('enrol', ['id' => $itemid, 'enrol' => $paymentarea])) {
-    $enrolperiod = $instance->enrolperiod;
-    if ($enrolperiod > 0) {
-        if ($enrolperiod >= 86400 * 7) {
-            $enrolperioddesc = get_string('weeks');
-            $enrolperiod = $enrolperiod / (86400 * 7);
-        } else if ($enrolperiod >= 86400) {
-            $enrolperioddesc = get_string('days');
-            $enrolperiod = round($enrolperiod / 86400);
-        } else if ($enrolperiod >= 3600) {
-            $enrolperioddesc = get_string('hours');
-            $enrolperiod = round($enrolperiod / 3600);
-        } else if ($enrolperiod >= 60) {
-            $enrolperioddesc = get_string('minutes');
-            $enrolperiod = round($enrolperiod / 60);
-        } else {
-            $enrolperioddesc = get_string('seconds');
-        }
+// Check area.
+if ($component == "enrol_fee") {
+    $cs = $DB->get_record('enrol', ['id' => $itemid, 'enrol' => $paymentarea]);
+    $enrolperiod = $cs->enrolperiod;
+} else if ($component == "mod_gwpayments") {
+    $cs = $DB->get_record('gwpayments', ['id' => $itemid]);
+    $enrolperiod = $cs->costduration;
+}
+
+if ($enrolperiod > 0) {
+    if ($enrolperiod >= 86400 * 7) {
+        $enrolperioddesc = get_string('weeks');
+        $enrolperiod = $enrolperiod / (86400 * 7);
+    } else if ($enrolperiod >= 86400) {
+        $enrolperioddesc = get_string('days');
+        $enrolperiod = round($enrolperiod / 86400);
+    } else if ($enrolperiod >= 3600) {
+        $enrolperioddesc = get_string('hours');
+        $enrolperiod = round($enrolperiod / 3600);
+    } else if ($enrolperiod >= 60) {
+        $enrolperioddesc = get_string('minutes');
+        $enrolperiod = round($enrolperiod / 60);
+    } else {
+        $enrolperioddesc = get_string('seconds');
     }
 }
 
