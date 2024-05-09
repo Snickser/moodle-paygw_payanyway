@@ -2,7 +2,7 @@
 
 # PayAnyWay payment gateway plugin for Moodle.
 
-Version 0.7
+Version 0.8
 
 https://payanyway.ru
 
@@ -11,6 +11,16 @@ https://payanyway.ru
 ## Status
 
 [![Build Status](https://github.com/Snickser/moodle-paygw_payanyway/actions/workflows/moodle-ci.yml/badge.svg)](https://github.com/Snickser/moodle-paygw_payanyway/actions/workflows/moodle-ci.yml)
+
+## Возможности
+
++ Можно использовать пароль или кнопку для обхода платежа.
++ Сохраняет в базе номер курса и название группы студента.
++ Можно указать рекомендуемую цену.
++ Можно ограничить максимальную цену.
++ Отображение продолжительности обучения (для enrol_fee и mod_gwpaymets), если она установлена.
++ Оповещение пользователя при успешном платеже.
+
 
 ## Рекомендации
 
