@@ -73,6 +73,10 @@ class gateway extends \core_payment\gateway {
         $mform->addElement('advcheckbox', 'mnttestmode', get_string('mnttestmode', 'paygw_payanyway'), '0');
         $mform->setType('mnttestmode', PARAM_INT);
 
+        $mform->addElement('text', 'fixdesc', get_string('fixdesc', 'paygw_payanyway'), ['size' => 50]);
+        $mform->setType('fixdesc', PARAM_TEXT);
+        $mform->addHelpButton('fixdesc', 'fixdesc', 'paygw_payanyway');
+
         $mform->addElement('advcheckbox', 'skipmode', get_string('skipmode', 'paygw_payanyway'), '0');
         $mform->setType('skipmode', PARAM_TEXT);
         $mform->addHelpButton('skipmode', 'skipmode', 'paygw_payanyway');
@@ -96,9 +100,13 @@ class gateway extends \core_payment\gateway {
         $mform->setType('usedetails', PARAM_INT);
         $mform->addHelpButton('usedetails', 'usedetails', 'paygw_payanyway');
 
-        $mform->addElement('text', 'fixdesc', get_string('fixdesc', 'paygw_payanyway'), ['size' => 50]);
-        $mform->setType('fixdesc', PARAM_TEXT);
-        $mform->addHelpButton('fixdesc', 'fixdesc', 'paygw_payanyway');
+        $mform->addElement(
+            'advcheckbox',
+            'showduration',
+            get_string('showduration', 'paygw_payanyway'),
+            get_string('showduration', 'paygw_payanyway')
+        );
+        $mform->setType('showduration', PARAM_INT);
 
         $mform->addElement('float', 'suggest', get_string('suggest', 'paygw_payanyway'), ['size' => 10]);
         $mform->setType('suggest', PARAM_FLOAT);
