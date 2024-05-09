@@ -23,6 +23,7 @@
  */
 
 use core_payment\helper;
+use paygw_payanyway\notifications;
 
 require("../../../config.php");
 
@@ -30,7 +31,7 @@ global $CFG, $USER, $DB;
 
 defined('MOODLE_INTERNAL') || die();
 
-$transactionid = required_param('MNT_TRANSACTION_ID', PARAM_TEXT);
+$transactionid = required_param('MNT_TRANSACTION_ID', PARAM_INT);
 $operationid   = required_param('MNT_OPERATION_ID', PARAM_TEXT);
 $subscriberid  = required_param('MNT_SUBSCRIBER_ID', PARAM_TEXT);
 $signature     = required_param('MNT_SIGNATURE', PARAM_TEXT);
@@ -65,6 +66,15 @@ if ($crc !== $signature) {
 
 // Deliver.
 helper::deliver_order($component, $paymentarea, $itemid, $paymentid, $userid);
+
+// Notify user.
+notifications::notify(
+    $userid,
+    $payment->amount,
+    $payment->currency,
+    $paymentid,
+    'Success completed'
+);
 
 // Check test-mode.
 if ($config->mnttestmode) {
