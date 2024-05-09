@@ -99,3 +99,9 @@ $string['privacy:metadata:paygw_payanyway:invoiceid'] = 'Invoice id';
 $string['privacy:metadata:paygw_payanyway:courceid'] = 'Cource id';
 $string['privacy:metadata:paygw_payanyway:groupnames'] = 'Group names';
 $string['privacy:metadata:paygw_payanyway:success'] = 'Status';
+
+$string['messagesubject'] = 'Payment notification';
+$string['message_success_completed'] = 'Hello {$a->firstname},
+You transaction of payment id {$a->orderid} with cost of {$a->fee} {$a->currency} is successfully completed.
+If the item is not accessable please contact the administrator.';
+$string['messageprovider:payment_receipt'] = 'Payment receipt';
