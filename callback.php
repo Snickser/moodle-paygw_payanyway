@@ -51,7 +51,6 @@ $userid      = $payment->userid;
 
 // Get config.
 $config = (object) helper::get_gateway_configuration($component, $paymentarea, $itemid, 'payanyway');
-$payable = helper::get_payable($component, $paymentarea, $itemid);
 
 // Use the same rounding of floats as on the paygw form.
 $cost = number_format($payment->amount, 2, '.', '');
