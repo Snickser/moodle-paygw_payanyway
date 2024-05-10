@@ -85,7 +85,7 @@ class gateway extends \core_payment\gateway {
             get_string('skipmode', 'paygw_payanyway'),
             get_string('skipmode', 'paygw_payanyway')
         );
-        $mform->setType('skipmode', PARAM_TEXT);
+        $mform->setType('skipmode', PARAM_INT);
         $mform->addHelpButton('skipmode', 'skipmode', 'paygw_payanyway');
 
         $mform->addElement(
@@ -94,7 +94,7 @@ class gateway extends \core_payment\gateway {
             get_string('passwordmode', 'paygw_payanyway'),
             get_string('passwordmode', 'paygw_payanyway')
         );
-        $mform->setType('passwordmode', PARAM_TEXT);
+        $mform->setType('passwordmode', PARAM_INT);
         $mform->disabledIf('passwordmode', 'skipmode', "neq", 0);
 
         $mform->addElement('text', 'password', get_string('password', 'paygw_payanyway'));
