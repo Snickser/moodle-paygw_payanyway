@@ -46,6 +46,7 @@ $component   = $payment->component;
 $itemid      = $payment->itemid;
 
 $url = helper::get_success_url($component, $paymentarea, $itemid);
+
 if ($payanywaytx->success) {
     redirect($url, get_string('payment_success', 'paygw_payanyway'), 0, 'success');
 } else {
