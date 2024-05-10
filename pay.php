@@ -146,7 +146,6 @@ if (!empty($password) || $skipmode) {
     die; // Never.
 }
 
-
 // Save payment.
 $paymentid = helper::save_payment(
     $payable->get_account_id(),
