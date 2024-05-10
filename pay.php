@@ -28,19 +28,19 @@ require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir . '/filelib.php');
 
 require_login();
+require_sesskey();
 
 global $CFG, $USER, $DB;
 
 $userid = $USER->id;
 
-
-$component   = required_param('component', PARAM_ALPHANUMEXT);
-$paymentarea = required_param('paymentarea', PARAM_ALPHANUMEXT);
+$component   = required_param('component', PARAM_COMPONENT);
+$paymentarea = required_param('paymentarea', PARAM_AREA);
 $itemid      = required_param('itemid', PARAM_INT);
 $description = required_param('description', PARAM_TEXT);
 
 $password    = optional_param('password', null, PARAM_TEXT);
-$skipmode    = optional_param('skipmode', null, PARAM_TEXT);
+$skipmode    = optional_param('skipmode', null, PARAM_INT);
 $costself    = optional_param('costself', null, PARAM_TEXT);
 
 $description = json_decode("\"$description\"");

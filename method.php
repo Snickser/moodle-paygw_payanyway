@@ -32,12 +32,12 @@ defined('MOODLE_INTERNAL') || die();
 require_login();
 require_sesskey();
 
-$component   = required_param('component', PARAM_ALPHANUMEXT);
-$paymentarea = required_param('paymentarea', PARAM_ALPHANUMEXT);
+$component   = required_param('component', PARAM_COMPONENT);
+$paymentarea = required_param('paymentarea', PARAM_AREA);
 $itemid      = required_param('itemid', PARAM_INT);
 $description = required_param('description', PARAM_TEXT);
 
-$description = json_decode("\"$description\"");
+$description = json_decode('"' . $description . '"');
 
 $params = [
     'component'   => $component,
@@ -103,6 +103,7 @@ $templatedata->itemid      = $itemid;
 $templatedata->description = $description;
 $templatedata->fee         = $fee;
 $templatedata->currency    = $currency;
+$templatedata->sesskey     = sesskey();
 
 if ($config->showduration) {
     $templatedata->enrolperiod = $enrolperiod;
