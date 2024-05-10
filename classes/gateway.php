@@ -77,11 +77,23 @@ class gateway extends \core_payment\gateway {
         $mform->setType('fixdesc', PARAM_TEXT);
         $mform->addHelpButton('fixdesc', 'fixdesc', 'paygw_payanyway');
 
-        $mform->addElement('advcheckbox', 'skipmode', get_string('skipmode', 'paygw_payanyway'), '0');
+        $mform->addElement('static');
+
+        $mform->addElement(
+            'advcheckbox',
+            'skipmode',
+            get_string('skipmode', 'paygw_payanyway'),
+            get_string('skipmode', 'paygw_payanyway')
+        );
         $mform->setType('skipmode', PARAM_TEXT);
         $mform->addHelpButton('skipmode', 'skipmode', 'paygw_payanyway');
 
-        $mform->addElement('advcheckbox', 'passwordmode', get_string('passwordmode', 'paygw_payanyway'), '0');
+        $mform->addElement(
+            'advcheckbox',
+            'passwordmode',
+            get_string('passwordmode', 'paygw_payanyway'),
+            get_string('passwordmode', 'paygw_payanyway')
+        );
         $mform->setType('passwordmode', PARAM_TEXT);
         $mform->disabledIf('passwordmode', 'skipmode', "neq", 0);
 
