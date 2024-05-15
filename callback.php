@@ -35,6 +35,8 @@ $transactionid = required_param('MNT_TRANSACTION_ID', PARAM_INT);
 $operationid   = required_param('MNT_OPERATION_ID', PARAM_TEXT);
 $subscriberid  = required_param('MNT_SUBSCRIBER_ID', PARAM_TEXT);
 $signature     = required_param('MNT_SIGNATURE', PARAM_TEXT);
+$amount        = required_param('MNT_AMOUNT', PARAM_FLOAT);
+$currency      = required_param('MNT_CURRENCY_CODE', PARAM_TEXT);
 
 if (!$payanywaytx = $DB->get_record('paygw_payanyway', ['paymentid' => $transactionid])) {
     die('FAIL. Not a valid transaction id');
@@ -53,15 +55,20 @@ $userid      = $payment->userid;
 $config = (object) helper::get_gateway_configuration($component, $paymentarea, $itemid, 'payanyway');
 
 // Use the same rounding of floats as on the paygw form.
-$cost = number_format($payment->amount, 2, '.', '');
+$cost = number_format($amount, 2, '.', '');
 
 // Build crc.
 $crc = md5($config->mntid . $paymentid . $operationid . $cost . $payment->currency . $subscriberid .
            $config->mnttestmode . $config->mntdataintegritycode);
 
+// Check signature.
 if ($crc !== $signature) {
     die('FAIL. Signature does not match.');
 }
+
+// Update payment.
+$payment->amount = $amount;
+$DB->update_record('payments', $payment);
 
 // Deliver.
 helper::deliver_order($component, $paymentarea, $itemid, $paymentid, $userid);
