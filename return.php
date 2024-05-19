@@ -34,11 +34,11 @@ require_login();
 $id = required_param('MNT_TRANSACTION_ID', PARAM_INT);
 
 if (!$payanywaytx = $DB->get_record('paygw_payanyway', ['paymentid' => $id])) {
-    die('FAIL. Not a valid transaction id');
+    throw new Error('FAIL. Not a valid transaction id');
 }
 
 if (!$payment = $DB->get_record('payments', ['id' => $payanywaytx->paymentid])) {
-    die('FAIL. Not a valid payment.');
+    throw new Error('FAIL. Not a valid payment.');
 }
 
 $paymentarea = $payment->paymentarea;
@@ -46,7 +46,6 @@ $component   = $payment->component;
 $itemid      = $payment->itemid;
 
 $url = helper::get_success_url($component, $paymentarea, $itemid);
-
 if ($payanywaytx->success) {
     redirect($url, get_string('payment_success', 'paygw_payanyway'), 0, 'success');
 } else {

@@ -96,7 +96,7 @@ $paygwdata->courseid = $courseid;
 $paygwdata->groupnames = $groupnames;
 
 if (!$transactionid = $DB->insert_record('paygw_payanyway', $paygwdata)) {
-    die(get_string('error_txdatabase', 'paygw_robokassa'));
+    throw new Error(get_string('error_txdatabase', 'paygw_robokassa'));
 }
 $paygwdata->id = $transactionid;
 
@@ -153,7 +153,7 @@ $paymentid = helper::save_payment(
     $paymentarea,
     $itemid,
     $userid,
-    0,
+    $cost,
     $payable->get_currency(),
     'payanyway'
 );
