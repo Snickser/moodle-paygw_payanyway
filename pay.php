@@ -25,12 +25,11 @@
 use core_payment\helper;
 
 require_once(__DIR__ . '/../../../config.php');
+global $CFG, $USER, $DB;
 require_once($CFG->libdir . '/filelib.php');
 
 require_login();
 require_sesskey();
-
-global $CFG, $USER, $DB;
 
 $userid = $USER->id;
 
@@ -43,7 +42,7 @@ $password    = optional_param('password', null, PARAM_TEXT);
 $skipmode    = optional_param('skipmode', null, PARAM_INT);
 $costself    = optional_param('costself', null, PARAM_TEXT);
 
-$description = json_decode("\"$description\"");
+$description = json_decode('"' . $description . '"');
 
 $config = (object) helper::get_gateway_configuration($component, $paymentarea, $itemid, 'payanyway');
 $payable = helper::get_payable($component, $paymentarea, $itemid);// Get currency and payment amount.
@@ -56,10 +55,12 @@ $cost = helper::get_rounded_cost($payable->get_amount(), $payable->get_currency(
 if (!empty($costself)) {
     $cost = $costself;
 }
+
 // Check maxcost.
 if ($config->maxcost && $cost > $config->maxcost) {
     $cost = $config->maxcost;
 }
+
 $cost = number_format($cost, 2, '.', '');
 
 // Get course and groups for user.
@@ -98,6 +99,7 @@ $paygwdata->groupnames = $groupnames;
 if (!$transactionid = $DB->insert_record('paygw_payanyway', $paygwdata)) {
     throw new Error(get_string('error_txdatabase', 'paygw_robokassa'));
 }
+
 $paygwdata->id = $transactionid;
 
 // Build redirect.
@@ -168,12 +170,12 @@ if (!empty($config->paymentsystem)) {
     $paymentsystem = '';
 }
 
-$successurl = $CFG->wwwroot . "/payment/gateway/payanyway/return.php";
 
 // Write to DB.
 $paygwdata->paymentid = $paymentid;
 $DB->update_record('paygw_payanyway', $paygwdata);
 
+$successurl = $CFG->wwwroot . "/payment/gateway/payanyway/return.php";
 $paymenturl = "https://" . $config->paymentserver . "/assistant.htm?";
 
 redirect($paymenturl .
