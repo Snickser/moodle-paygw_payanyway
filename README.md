@@ -1,8 +1,6 @@
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/snickser) support me with a donation.
-
 # PayAnyWay payment gateway plugin for Moodle.
 
-Version 0.9
+Version 0.10
 
 https://payanyway.ru
 
