@@ -1,8 +1,6 @@
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/snickser) support me with a donation.
-
 # PayAnyWay payment gateway plugin for Moodle.
 
-Version 0.9
+Version 0.12
 
 https://payanyway.ru
 
@@ -16,8 +14,7 @@ https://payanyway.ru
 
 + Можно использовать пароль или кнопку для обхода платежа.
 + Сохраняет в базе номер курса и название группы студента.
-+ Можно указать рекомендуемую цену.
-+ Можно ограничить максимальную цену.
++ Можно указать рекомендуемую цену, ограничить максимальную цену, или включить режим фиксированной цены.
 + Отображение продолжительности обучения (для enrol_fee и mod_gwpaymets), если она установлена.
 + Поддержка пароля из модуля курса (mod_gwpaymets).
 + Оповещение пользователя при успешном платеже.
@@ -26,14 +23,15 @@ https://payanyway.ru
 ## Рекомендации
 
 + Moodle 4.3+
-+ Для записи в курс подходит стандарный плагин "Зачисление за оплату" (enrol_fee).
-+ Для контрольного задания используйте модуль "[Gateway Payments](https://moodle.org/plugins/mod_gwpayments)" (мои правки [mod_gwpayments](https://github.com/Snickser/moodle-mod_gwpayments/tree/dev)), он правда глючный, но других пока нет.
-+ Для ограничения доступности используйте модуль "[PaymentS availability condition for paid access](https://moodle.org/plugins/availability_gwpayments)" (мои правки [availability_gwpayments](https://github.com/Snickser/moodle-availability_gwpayments/tree/dev)).
++ Для записи в курс используйте мой пропатченный плагин "Зачисление за оплату" [enrol_fee](https://github.com/Snickser/moodle-enrol_fee/tree/dev).
++ Для контрольного задания используйте пропатченный мной плагин по ссылке [mod_gwpayments](https://github.com/Snickser/moodle-mod_gwpayments/tree/dev).
++ Для ограничения доступности используйте пропатченный мной плагин по ссылке [availability_gwpayments](https://github.com/Snickser/moodle-availability_gwpayments/tree/dev).
++ Плагин просмотра отчётов [report_payments](https://github.com/Snickser/moodle-report_payments/tree/dev).
 
 
 ## INSTALLATION
 
-Download the latest paygw_payanyway.zip and unzip the contents into the /payment/gateway directory. Or upload it from Moodle plugins adminnistration interface.
+Download the latest paygw_payanyway.zip and unzip the contents into the /payment/gateway directory. Or upload it from the plugin admin interface.
 
 1. Install the plugin
 2. Enable the PayAnyWay payment gateway

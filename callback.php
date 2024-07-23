@@ -68,6 +68,7 @@ if ($crc !== $signature) {
 
 // Update payment.
 $payment->amount = $amount;
+$payment->currency = $currency;
 $DB->update_record('payments', $payment);
 
 // Deliver.

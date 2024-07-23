@@ -90,3 +90,11 @@ $string['mailofrussiasenderaddress'] = 'Адрес отправителя';
 $string['mailofrussiasendername'] = 'Имя отправителя';
 $string['webmoneyaccountid'] = 'Источник оплаты';
 $string['sbp'] = 'СБП';
+
+$string['fixcost'] = 'Режим фиксированной цены';
+$string['fixcost_help'] = 'Отключает для студентов возможность оплаты произвольной суммой.';
+$string['maxcosterror'] = 'Максимальная цена должна быть выше рекомендуемой цены';
+
+$string['message_invoice_created'] = 'Здравствуйте, {$a->firstname}!
+Платёжная ссылка {$a->orderid} на {$a->localizedcost} успешно создана.
+Вы можете совершить платёж по ней в течении часа.';

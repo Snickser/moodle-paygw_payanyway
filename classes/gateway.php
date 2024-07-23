@@ -55,6 +55,17 @@ class gateway extends \core_payment\gateway {
         $mform->addElement('select', 'paymentserver', get_string('paymentserver', 'paygw_payanyway'), $options);
         $mform->setType('paymentserver', PARAM_TEXT);
 
+        $mform->addElement('text', 'mntid', get_string('mntid', 'paygw_payanyway'));
+        $mform->setType('mntid', PARAM_TEXT);
+        $mform->addRule('mntid', get_string('required'), 'required', null, 'client');
+
+        $mform->addElement('text', 'mntdataintegritycode', get_string('mntdataintegritycode', 'paygw_payanyway'));
+        $mform->setType('mntdataintegritycode', PARAM_TEXT);
+        $mform->addRule('mntdataintegritycode', get_string('required'), 'required', null, 'client');
+
+        $mform->addElement('advcheckbox', 'mnttestmode', get_string('mnttestmode', 'paygw_payanyway'), '0');
+        $mform->setType('mnttestmode', PARAM_INT);
+
         $paymentsystems = [
             '0' => get_string('payanyway', 'paygw_payanyway'),
             'card' => get_string('plastic', 'paygw_payanyway'),
@@ -64,37 +75,16 @@ class gateway extends \core_payment\gateway {
         $mform->addElement('select', 'paymentsystem', get_string('paymentsystem', 'paygw_payanyway'), $paymentsystems);
         $mform->setDefault('paymentsystem', get_string('paymentsystem', 'paygw_payanyway'));
 
-        $mform->addElement('text', 'mntid', get_string('mntid', 'paygw_payanyway'));
-        $mform->setType('mntid', PARAM_TEXT);
-
-        $mform->addElement('text', 'mntdataintegritycode', get_string('mntdataintegritycode', 'paygw_payanyway'));
-        $mform->setType('mntdataintegritycode', PARAM_TEXT);
-
-        $mform->addElement('advcheckbox', 'mnttestmode', get_string('mnttestmode', 'paygw_payanyway'), '0');
-        $mform->setType('mnttestmode', PARAM_INT);
-
         $mform->addElement('text', 'fixdesc', get_string('fixdesc', 'paygw_payanyway'), ['size' => 50]);
         $mform->setType('fixdesc', PARAM_TEXT);
         $mform->addHelpButton('fixdesc', 'fixdesc', 'paygw_payanyway');
 
-        $mform->addElement('static');
-
-        $mform->addElement(
-            'advcheckbox',
-            'skipmode',
-            get_string('skipmode', 'paygw_payanyway'),
-            get_string('skipmode', 'paygw_payanyway')
-        );
-        $mform->setType('skipmode', PARAM_INT);
+        $mform->addElement('advcheckbox', 'skipmode', get_string('skipmode', 'paygw_payanyway'), '0');
+        $mform->setType('skipmode', PARAM_TEXT);
         $mform->addHelpButton('skipmode', 'skipmode', 'paygw_payanyway');
 
-        $mform->addElement(
-            'advcheckbox',
-            'passwordmode',
-            get_string('passwordmode', 'paygw_payanyway'),
-            get_string('passwordmode', 'paygw_payanyway')
-        );
-        $mform->setType('passwordmode', PARAM_INT);
+        $mform->addElement('advcheckbox', 'passwordmode', get_string('passwordmode', 'paygw_payanyway'), '0');
+        $mform->setType('passwordmode', PARAM_TEXT);
         $mform->disabledIf('passwordmode', 'skipmode', "neq", 0);
 
         $mform->addElement('text', 'password', get_string('password', 'paygw_payanyway'));
@@ -120,17 +110,35 @@ class gateway extends \core_payment\gateway {
         );
         $mform->setType('showduration', PARAM_INT);
 
+        $mform->addElement(
+            'advcheckbox',
+            'fixcost',
+            get_string('fixcost', 'paygw_payanyway'),
+            get_string('fixcost', 'paygw_payanyway')
+        );
+        $mform->setType('fixcost', PARAM_INT);
+        $mform->addHelpButton('fixcost', 'fixcost', 'paygw_payanyway');
+
         $mform->addElement('float', 'suggest', get_string('suggest', 'paygw_payanyway'), ['size' => 10]);
         $mform->setType('suggest', PARAM_FLOAT);
+        $mform->disabledIf('suggest', 'fixcost', "neq", 0);
 
         $mform->addElement('float', 'maxcost', get_string('maxcost', 'paygw_payanyway'), ['size' => 10]);
         $mform->setType('maxcost', PARAM_FLOAT);
+        $mform->disabledIf('maxcost', 'fixcost', "neq", 0);
 
         global $CFG;
-        $mform->addElement('html', '<div class="label-callback" style="background: #F2EFE6; padding: 15px;">' .
+        $mform->addElement('html', '<div class="label-callback" style="background: pink; padding: 15px;">' .
                                     get_string('callback', 'paygw_payanyway') . '<br>');
         $mform->addElement('html', $CFG->wwwroot . '/payment/gateway/payanyway/callback.php<br>');
         $mform->addElement('html', get_string('callback_help', 'paygw_payanyway') . '</div><br>');
+
+        $header = '<div>Новые версии плагина вы можете найти на
+ <a href=https://github.com/Snickser/moodle-paygw_yookassa>GitHub.com</a><br>
+ Пожалуйста, отправьте мне немножко <a href="https://yoomoney.ru/fundraise/143H2JO3LLE.240720">доната</a>😊</div>
+ <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=143H2JO3LLE.240720"
+ width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>';
+        $mform->addElement('html', $header);
     }
 
     /**
@@ -152,6 +160,9 @@ class gateway extends \core_payment\gateway {
                 (empty($data->mntid) || empty($data->mntdataintegritycode) || empty($data->paymentserver))
         ) {
             $errors['enabled'] = get_string('gatewaycannotbeenabled', 'payment');
+        }
+        if ($data->maxcost && $data->maxcost < $data->suggest) {
+            $errors['maxcost'] = get_string('maxcosterror', 'paygw_payanyway');
         }
     }
 }
