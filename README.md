@@ -31,7 +31,7 @@ https://payanyway.ru
 
 ## INSTALLATION
 
-Download the latest paygw_payanyway.zip and unzip the contents into the /payment/gateway directory. Or upload it from Moodle plugins adminnistration interface.
+Download the latest paygw_payanyway.zip and unzip the contents into the /payment/gateway directory. Or upload it from the plugin admin interface.
 
 1. Install the plugin
 2. Enable the PayAnyWay payment gateway
