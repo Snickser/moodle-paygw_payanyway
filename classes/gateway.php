@@ -110,11 +110,22 @@ class gateway extends \core_payment\gateway {
         );
         $mform->setType('showduration', PARAM_INT);
 
+        $mform->addElement(
+            'advcheckbox',
+            'fixcost',
+            get_string('fixcost', 'paygw_payanyway'),
+            get_string('fixcost', 'paygw_payanyway')
+        );
+        $mform->setType('fixcost', PARAM_INT);
+        $mform->addHelpButton('fixcost', 'fixcost', 'paygw_payanyway');
+
         $mform->addElement('float', 'suggest', get_string('suggest', 'paygw_payanyway'), ['size' => 10]);
         $mform->setType('suggest', PARAM_FLOAT);
+        $mform->disabledIf('suggest', 'fixcost', "neq", 0);
 
         $mform->addElement('float', 'maxcost', get_string('maxcost', 'paygw_payanyway'), ['size' => 10]);
         $mform->setType('maxcost', PARAM_FLOAT);
+        $mform->disabledIf('maxcost', 'fixcost', "neq", 0);
 
         global $CFG;
         $mform->addElement('html', '<div class="label-callback" style="background: pink; padding: 15px;">' .
@@ -149,6 +160,9 @@ class gateway extends \core_payment\gateway {
                 (empty($data->mntid) || empty($data->mntdataintegritycode) || empty($data->paymentserver))
         ) {
             $errors['enabled'] = get_string('gatewaycannotbeenabled', 'payment');
+        }
+        if ($data->maxcost && $data->maxcost < $data->suggest) {
+            $errors['maxcost'] = get_string('maxcosterror', 'paygw_payanyway');
         }
     }
 }
