@@ -46,7 +46,6 @@ $string['paymore'] = 'If you want to donate more, simply enter your amount inste
 $string['pluginname'] = 'PayAnyWay payment';
 $string['pluginname_desc'] = 'The PayAnyWay plugin allows you to receive payments via PayAnyWay.';
 $string['sendpaymentbutton'] = 'Send payment via PayAnyWay';
-$string['paymore'] = 'If you want to donate more, simply enter your amount instead of the indicated amount.';
 $string['skipmode'] = 'Can skip payment';
 $string['skipmode_help'] = 'This setting allows a payment bypass button, which can be useful in public courses with optional payment.';
 $string['skipmode_text'] = 'If you are not able to make a donation through the payment system, you can click on this button.';
