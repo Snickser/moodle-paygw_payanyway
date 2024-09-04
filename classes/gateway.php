@@ -128,7 +128,7 @@ class gateway extends \core_payment\gateway {
         $mform->addElement('html', $CFG->wwwroot . '/payment/gateway/payanyway/callback.php<br>');
         $mform->addElement('html', get_string('callback_help', 'paygw_payanyway') . '</div><br>');
 
-        $plugininfo = \core_plugin_manager::instance()->get_plugin_info('paygw_yookassa');
+        $plugininfo = \core_plugin_manager::instance()->get_plugin_info('paygw_payanyway');
         $header = "<div>Версия плагина: $plugininfo->release ($plugininfo->versiondisk)<br>" .
         'Новые версии плагина вы можете найти на
  <a href=https://github.com/Snickser/moodle-paygw_payanyway>GitHub.com</a>
