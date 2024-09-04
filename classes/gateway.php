@@ -59,7 +59,7 @@ class gateway extends \core_payment\gateway {
         $mform->setType('mntid', PARAM_TEXT);
         $mform->addRule('mntid', get_string('required'), 'required', null, 'client');
 
-        $mform->addElement('text', 'mntdataintegritycode', get_string('mntdataintegritycode', 'paygw_payanyway'));
+        $mform->addElement('passwordunmask', 'mntdataintegritycode', get_string('mntdataintegritycode', 'paygw_payanyway'));
         $mform->setType('mntdataintegritycode', PARAM_TEXT);
         $mform->addRule('mntdataintegritycode', get_string('required'), 'required', null, 'client');
 
@@ -87,16 +87,13 @@ class gateway extends \core_payment\gateway {
         $mform->setType('passwordmode', PARAM_TEXT);
         $mform->disabledIf('passwordmode', 'skipmode', "neq", 0);
 
-        $mform->addElement('text', 'password', get_string('password', 'paygw_payanyway'));
+        $mform->addElement('passwordunmask', 'password', get_string('password', 'paygw_payanyway'));
         $mform->setType('password', PARAM_TEXT);
-        $mform->disabledIf('password', 'passwordmode');
-        $mform->disabledIf('password', 'skipmode', "neq", 0);
         $mform->addHelpButton('password', 'password', 'paygw_payanyway');
 
         $mform->addElement(
             'advcheckbox',
             'usedetails',
-            get_string('usedetails', 'paygw_payanyway'),
             get_string('usedetails', 'paygw_payanyway')
         );
         $mform->setType('usedetails', PARAM_INT);
@@ -105,7 +102,6 @@ class gateway extends \core_payment\gateway {
         $mform->addElement(
             'advcheckbox',
             'showduration',
-            get_string('showduration', 'paygw_payanyway'),
             get_string('showduration', 'paygw_payanyway')
         );
         $mform->setType('showduration', PARAM_INT);
@@ -113,7 +109,6 @@ class gateway extends \core_payment\gateway {
         $mform->addElement(
             'advcheckbox',
             'fixcost',
-            get_string('fixcost', 'paygw_payanyway'),
             get_string('fixcost', 'paygw_payanyway')
         );
         $mform->setType('fixcost', PARAM_INT);
