@@ -129,7 +129,7 @@ class gateway extends \core_payment\gateway {
         $mform->addElement('html', get_string('callback_help', 'paygw_payanyway') . '</div><br>');
 
         $header = '<div>Новые версии плагина вы можете найти на
- <a href=https://github.com/Snickser/moodle-paygw_yookassa>GitHub.com</a>
+ <a href=https://github.com/Snickser/moodle-paygw_payanyway>GitHub.com</a>
  <img src="https://img.shields.io/github/v/release/Snickser/moodle-paygw_payanyway.svg"><br>
  Пожалуйста, отправьте мне немножко <a href="https://yoomoney.ru/fundraise/143H2JO3LLE.240720">доната</a>😊</div>
  <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=143H2JO3LLE.240720"
