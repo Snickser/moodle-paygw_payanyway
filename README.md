@@ -1,14 +1,12 @@
 # PayAnyWay payment gateway plugin for Moodle.
 
-Version 0.13
+[![](https://img.shields.io/github/v/release/Snickser/moodle-paygw_payanyway.svg)](https://github.com/Snickser/moodle-paygw_payanyway/releases)
+[![Build Status](https://github.com/Snickser/moodle-paygw_payanyway/actions/workflows/moodle-ci.yml/badge.svg)](https://github.com/Snickser/moodle-paygw_payanyway/actions/workflows/moodle-ci.yml)
 
 https://payanyway.ru
 
 ![alt text](https://github.com/Snickser/moodle-paygw_payanyway/blob/main/payanyway.png?raw=true)
 
-## Status
-
-[![Build Status](https://github.com/Snickser/moodle-paygw_payanyway/actions/workflows/moodle-ci.yml/badge.svg)](https://github.com/Snickser/moodle-paygw_payanyway/actions/workflows/moodle-ci.yml)
 
 ## Возможности
 
