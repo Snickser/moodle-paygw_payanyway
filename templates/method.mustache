@@ -61,10 +61,6 @@
 {{#fixcost}}{{localizedcost}}{{/fixcost}}
 </h3>
 
-{{#enrolperiod}}
-<h4>{{# str }} enrolperiod, enrol {{/ str}} ({{enrolperiod_desc}}): {{enrolperiod}}</h4>
-{{/enrolperiod}}
-
 <br>
 <img src="{{{image}}}" alt="PayAnyWay" height="20">
 
@@ -72,7 +68,11 @@
     </div>
 <br><br>
 
-    <div style="text-align: center;">
+<div style="text-align: center;">
+
+{{#enrolperiod}}
+<h4>{{# str }} enrolperiod, enrol {{/ str}} ({{enrolperiod_desc}}): {{enrolperiod}}</h4>
+{{/enrolperiod}}
 
 <p>{{# str }} paymentinstant {{/ str}}</p>
 <button type="submit" class="btn btn-primary" id="payanyway-modal-submit-btn">{{# str }} sendpaymentbutton, paygw_payanyway {{/ str }}</button>
