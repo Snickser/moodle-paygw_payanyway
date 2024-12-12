@@ -113,3 +113,10 @@ $string['maxcosterror'] = 'The maximum price must be higher than the recommended
 $string['message_invoice_created'] = 'Hello {$a->firstname}!
 Your payment link {$a->orderid} to {$a->fee} {$a->currency} has been successfully created.
 You can pay it within an hour.';
+
+$string['donate'] = '<div>Plugin version: {$a->release} ({$a->versiondisk})<br>
+You can find new versions of the plugin at <a href=https://github.com/Snickser/moodle-paygw_payanyway>GitHub.com</a>
+<img src="https://img.shields.io/github/v/release/Snickser/moodle-paygw_payanyway.svg"><br>
+Please send me some <a href="https://yoomoney.ru/fundraise/143H2JO3LLE.240720">donate</a>😊</div>
+<iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=143H2JO3LLE.240720"
+width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>';
