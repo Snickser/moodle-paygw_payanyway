@@ -57,7 +57,7 @@ class provider implements \core_privacy\local\request\data_provider, paygw_provi
         $collection->add_database_table(
             'paygw_payanyway',
             [
-                'courceid'   => 'privacy:metadata:paygw_payanyway:courceid',
+                'courseid'   => 'privacy:metadata:paygw_payanyway:courseid',
                 'groupnames' => 'privacy:metadata:paygw_payanyway:groupnames',
                 'success'    => 'privacy:metadata:paygw_payanyway:success',
             ],
