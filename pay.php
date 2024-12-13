@@ -51,8 +51,8 @@ $surcharge = helper::get_gateway_surcharge('payanyway');// In case user uses sur
 
 $cost = helper::get_rounded_cost($payable->get_amount(), $payable->get_currency(), $surcharge);
 
-// Check self cost.
-if (!empty($costself)) {
+// Check self cost if not fixcost.
+if (!empty($costself) && !$config->fixcost) {
     $cost = $costself;
 }
 
