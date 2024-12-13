@@ -96,7 +96,7 @@ $string['privacy:metadata:paygw_payanyway:apikey'] = 'ApiKey';
 $string['privacy:metadata:paygw_payanyway:email'] = 'Email';
 $string['privacy:metadata:paygw_payanyway:payanyway_plus'] = 'Send json data';
 $string['privacy:metadata:paygw_payanyway:invoiceid'] = 'Invoice id';
-$string['privacy:metadata:paygw_payanyway:courceid'] = 'Cource id';
+$string['privacy:metadata:paygw_payanyway:courseid'] = 'Course id';
 $string['privacy:metadata:paygw_payanyway:groupnames'] = 'Group names';
 $string['privacy:metadata:paygw_payanyway:success'] = 'Status';
 
