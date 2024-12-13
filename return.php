@@ -34,11 +34,11 @@ require_login();
 $id = required_param('MNT_TRANSACTION_ID', PARAM_INT);
 
 if (!$payanywaytx = $DB->get_record('paygw_payanyway', ['paymentid' => $id])) {
-    throw new Error('FAIL. Not a valid transaction id');
+    throw new \moodle_exception(get_string('error_notvalidtxid', 'paygw_payanyway'), 'paygw_payanyway');
 }
 
 if (!$payment = $DB->get_record('payments', ['id' => $payanywaytx->paymentid])) {
-    throw new Error('FAIL. Not a valid payment.');
+    throw new \moodle_exception(get_string('error_notvalidpayment', 'paygw_payanyway'), 'paygw_payanyway');
 }
 
 $paymentarea = $payment->paymentarea;
