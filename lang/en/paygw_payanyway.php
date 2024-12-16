@@ -87,9 +87,8 @@ $string['webmoneyaccountid'] = 'Payment method';
 $string['sbp'] = 'SBP';
 
 $string['internalerror'] = 'An internal error has occurred. Please contact us.';
-$string['privacy:metadata'] = 'The PayAnyWay plugin does not store any personal data.';
 
-$string['privacy:metadata'] = 'The payanyway plugin store some personal data.';
+$string['privacy:metadata'] = 'The PayAnyWay plugin store some personal data.';
 $string['privacy:metadata:paygw_payanyway:paygw_payanyway'] = 'Store some data';
 $string['privacy:metadata:paygw_payanyway:shopid'] = 'Shopid';
 $string['privacy:metadata:paygw_payanyway:apikey'] = 'ApiKey';
