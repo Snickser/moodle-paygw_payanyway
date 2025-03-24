@@ -3,7 +3,7 @@
 [![](https://img.shields.io/github/v/release/Snickser/moodle-paygw_payanyway.svg)](https://github.com/Snickser/moodle-paygw_payanyway/releases)
 [![Build Status](https://github.com/Snickser/moodle-paygw_payanyway/actions/workflows/moodle-ci.yml/badge.svg)](https://github.com/Snickser/moodle-paygw_payanyway/actions/workflows/moodle-ci.yml)
 
-![monetaru-payanyway-logo](https://github.com/user-attachments/assets/5972c3bb-9f91-4f50-addb-e8c9ddf4bf24)
+![payanyway-logo](https://github.com/user-attachments/assets/513d37da-a371-4c2f-82e5-cdc5ab40108b)
 
 https://payanyway.ru
 
