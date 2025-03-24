@@ -168,6 +168,10 @@ if (!$config->fixcost) {
     $templatedata->localizedcost = \core_payment\helper::get_cost_as_string($fee, $currency);
 }
 
+if ($uninterrupted && $fee != $cs->cost) {
+    $templatedata->uninterrupted = true;
+}
+
 $templatedata->skipmode = $config->skipmode;
 if ($config->skipmode || $config->passwordmode) {
     $templatedata->usedetails = $config->usedetails;
