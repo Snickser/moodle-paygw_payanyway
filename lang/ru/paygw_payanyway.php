@@ -109,3 +109,5 @@ BTC bc1q9gfmeh33497daetpugp9tjl56mggg966sgqhl0<br>
 EVM 0x4E2E41CD0F72095126f3d2945C545D069629b4d4<br>
 <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=143H2JO3LLE.240720"
 width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>';
+
+$string['uninterrupted_desc'] = 'Цена за курс сформирована с учётом пропущенного времени неоплаченного вами периода.';
