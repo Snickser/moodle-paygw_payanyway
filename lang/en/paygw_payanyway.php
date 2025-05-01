@@ -58,7 +58,7 @@ $string['usedetails_text'] = 'Click here if you are unable to donate.';
 
 /* Payment systems */
 $string['paymentsystem'] = 'Payment system';
-$string['payanyway'] = 'PayAnyWay';
+$string['payanyway'] = 'PayAnyWay (all)';
 $string['banktransfer'] = 'Bank transfer';
 $string['ciberpay'] = 'CiberPay';
 $string['comepay'] = 'Comepay';

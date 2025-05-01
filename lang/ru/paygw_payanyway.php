@@ -63,7 +63,7 @@ $string['usedetails_text'] = 'Нажмите тут если у вас нет в
 
 /* Payment systems */
 $string['paymentsystem'] = 'Платежная система';
-$string['payanyway'] = 'PayAnyWay';
+$string['payanyway'] = 'PayAnyWay (все доступные)';
 $string['banktransfer'] = 'Банковский перевод';
 $string['ciberpay'] = 'CiberPay';
 $string['comepay'] = 'Comepay';
